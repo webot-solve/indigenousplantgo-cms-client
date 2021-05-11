@@ -1,0 +1,161 @@
+.ui.input > input {
+  background: var(--lighttertiary) !important;
+  color: var(--darkprimary) !important;
+  border-radius: 0 !important;
+}
+
+.ui.input {
+  border: 1px solid var(--lightborder) !important;
+}
+
+.ui.input i {
+  color: var(--darksecondary);
+}
+
+.ui.toggle.checkbox label,
+.ui.toggle.checked.checkbox label,
+.ui.checkbox input:checked ~ label {
+  color: var(--darksecondary) !important;
+
+  &::before {
+    background: lightgrey !important;
+  }
+}
+
+fieldset > button:last-child {
+  margin-right: 0 !important;
+}
+
+fieldset .ui.toggle.checkbox input:focus:checked ~ label,
+fieldset .ui.toggle.checkbox input:checked ~ label {
+  color: var(--darksecondary) !important;
+
+  &::before {
+    background: var(--highlight) !important;
+  }
+}
+
+.ui.selection.dropdown {
+  background: var(--lighttertiary) !important;
+  color: var(--darkprimary) !important;
+  border-radius: 0 !important;
+  width: 100% !important;
+}
+
+.ui.dropdown .menu {
+  background: var(--lightsecondary) !important;
+}
+
+.ui.selection.dropdown .menu > .item {
+  color: var(--darkprimary) !important;
+  border-top: 1px solid var(--lightborder) !important;
+  line-height: 1.4em !important;
+}
+
+.ui.selection.dropdown .menu > .message {
+  color: var(--darkprimary) !important;
+}
+
+.ui.selection.dropdown .divider.text {
+  color: var(--darkprimary) !important;
+  font-size: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 160px !important;
+}
+
+input,
+button {
+  width: 100%;
+  cursor: pointer !important;
+  box-sizing: border-box; /* add this */
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.ui.indicating.progress .bar {
+  background-color: green !important;
+}
+
+.form__grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  .col {
+    margin-right: 30px;
+  }
+
+  & > .col:last-of-type {
+    margin-right: 0;
+  }
+}
+
+button.field__button {
+  background: var(--highlight);
+  padding: 14px 10px;
+  color: var(--lightprimary);
+  margin-bottom: 7px;
+
+  &.secondary {
+    background: var(--lightprimary);
+    color: var(--highlight);
+    border: 2px solid var(--highlight);
+  }
+}
+
+
+
+.field__file {
+  display: flex;
+  margin-bottom: 14px;
+  min-height: 40px;
+
+  .file__meta {
+    width: 100%;
+    border: 1px solid lightgray;
+    background: var(--lighttertiary);
+    max-height: 205px;
+    display: flex;
+    align-items: center;
+    padding: 0px 10px;
+    overflow: hidden;
+    max-width: 200px;
+
+    p {
+      width: 100%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+
+  button {
+    padding: 0;
+  }
+
+  button,
+  label {
+    // max-width: 50%;
+    width: 100%;
+    cursor: pointer;
+    font-weight: normal !important;
+    margin-bottom: 0 !important;
+  }
+
+  label {
+    padding: 14px 7px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .form__actions {
+    flex-direction: column-reverse;
+  }
+
+  .form__actions button {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+}

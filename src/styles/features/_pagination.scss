@@ -1,0 +1,32 @@
+.pagination__control {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  max-width: 1400px;
+  .control {
+    display: flex;
+
+    button {
+      width: unset !important;
+      height: 30px;
+      min-width: 30px;
+      border: 1px solid var(--lightborder);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: var(--lightborder);
+    }
+
+    span {
+      display: block;
+      height: 30px;
+      min-width: 30px;
+      border: 1px solid var(--lightborder);
+      line-height: 30px;
+      text-align: center;
+      margin-left: -1px;
+      margin-right: -1px;
+    }
+  }
+}

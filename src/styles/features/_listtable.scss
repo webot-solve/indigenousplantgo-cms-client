@@ -1,0 +1,177 @@
+.table__row {
+  background: var(--lightsecondary);
+  border: 1px solid var(--lightborder);
+  margin-bottom: 10px;
+  padding: 17px 0;
+  display: flex;
+  width: 100%;
+  max-width: 1400px;
+  transition: 0.2s ease-in-out;
+
+  &.selected {
+    background: #cefab2;
+    border: 1px solid #90e858;
+  }
+
+  .table__col {
+    padding: 0 7px;
+    line-height: 1.5em;
+    font-size: 14px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .select {
+    width: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .title {
+    width: 20%;
+
+    button {
+      width: unset !important;
+    }
+
+    p {
+      font-weight: bold;
+    }
+  }
+
+  .url {
+    width: 40%;
+    text-overflow: clip;
+    padding: 0 7px;
+    font-size: 12px;
+  }
+
+  .author {
+    width: 17.5%;
+    text-overflow: clip;
+  }
+
+  .categories {
+    width: 15%;
+  }
+
+  .tags {
+    width: 22.5%;
+  }
+
+  .updated {
+    width: 15%;
+  }
+
+  .thumbnail {
+    padding-left: 20px;
+  }
+
+  .thumbnail div {
+    width: 100px;
+    height: 60px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .audio__preview {
+    width: 100%;
+    max-width: 200px;
+
+    audio {
+      width: 100%;
+    }
+  }
+
+  .action {
+    display: inline-block;
+    margin-top: 3px;
+
+    button:nth-child(1) {
+      position: relative;
+      color: dodgerblue;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: calc(100% + 1px);
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 80%;
+        background: var(--lightborder);
+      }
+    }
+
+    button:nth-child(2) {
+      color: var(--danger);
+    }
+  }
+}
+
+.table__heading {
+  padding: 10px 0px;
+  background: none;
+  border: none;
+  h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+.table__controls {
+  max-width: 1400px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  .table__action {
+    display: flex;
+    margin-right: 20px;
+    position: relative;
+
+    button {
+      width: unset !important;
+      padding: 0px 30px;
+      background: var(--highlight);
+      color: var(--lightprimary);
+      margin-left: 3px;
+      transition: 0.2s ease-in-out;
+
+      &:hover,
+      &:focus {
+        background: var(--highlightsecondary);
+      }
+    }
+
+    button.sub__action {
+      position: absolute;
+      bottom: calc(100% + 7px);
+      left: 0;
+      text-align: left !important;
+      background: none;
+      color: var(--highlight);
+      padding-left: 0;
+      margin-left: 0;
+    }
+  }
+}
+
+button.resets {
+  width: unset !important;
+  font-size: 14px;
+
+  svg {
+    width: 13px;
+    height: 13px;
+    margin-right: 3px;
+    fill: var(--highlight);
+  }
+}

@@ -1,0 +1,30 @@
+.dash__header {
+  margin-bottom: 30px;
+  .dash__title {
+    display: flex;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  button {
+    display: inline-block;
+    width: unset;
+    border: 2px solid var(--highlight);
+    padding: 7px 30px;
+    font-weight: 700;
+    color: var(--highlight);
+    border-radius: 3px;
+    margin-left: 20px;
+    transition: 0.2s ease-in-out;
+
+    &:hover,
+    &:focus {
+      background: var(--highlight);
+      color: var(--lightprimary);
+      border: 2px solid var(--highlighttertiary);
+    }
+  }
+}
