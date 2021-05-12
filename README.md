@@ -109,3 +109,11 @@ cd indigenousplantgo-cms-client
 REACT_APP_BASE_URL="<Your link>/api"
 ```
 4. Running `npm start` now should run it at `http://localhost:3000`.
+#### Deploying client-side of cms to netlify
+1. Proceed to https://www.netlify.com/ 
+2. Select New site from Git and connect to a Git provider
+3. Select the repository for the client-side application
+4. Click on Advanced settings and define the environment variable (refer to the .env file):  
+      Key = "REACT_APP_BASE_URL"
+      Value : <-Your-Heroku-URL->
+5. Deploy the site
