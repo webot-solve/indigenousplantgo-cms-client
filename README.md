@@ -1,70 +1,94 @@
-# Getting Started with Create React App
+# Indigenous Plant Go
+Indigenous Plant Go is a mobile application that allows BCIT Students to explore the BCIT Burnaby campus and discover plants, and points-of-interests that have significance in the indigenous culture.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Table Of Contents**
+1. [Core Application Features](#core-application-features)
+2. [Application Features](#application-features)
+3. [Road-mapped Features](#road-mapped-features)
+4. [Technology Stack](#technology-stack)
+5. [Wireframes](#wireframes)
+6. [Installation Documents](#installation)
 
-## Available Scripts
+### Content Management System (Client)
+This specific repository houses the client-side user interface of the mobile application's content management system (cms).
 
-In the project directory, you can run:
+#### Core Application Features
+* User authentication
+* Users can create, read, update, delete resources:
+    * Plants
+    * Waypoints
+    * Locations
+    * Media (Images, Video, Audio)
+    * Categories + Tags
+* CMS Exposes a Restful API for the Mobile application to consume
 
-### `npm start`
+#### Application Features
+* Users can create, read, update, delete resources using a visual, tabular dashboard.
+* The tabular dashboard can be filtered, and searched.
+* Users can bulk-delete any resource
+* All DESTRUCTIVE requests will prompt the user for confirmation.
+* Users can upload images and audio files directly from the CMS.
+* A user can create other users.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### Road-mapped Features
+* Interface is mobile-responsive
+* Allow input for a QR code data for a plant and/or waypoint
+* Implement (2) more resource types: "tours", and "learn more"
+* Enhanced media previews allow the user to see the exact image/video/audio before upload.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Technology Stack
+* Client: ReactJS, axios
+* Deployment: Netlify
 
-### `npm test`
+### Wireframes
+#### Home
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/DASHBOARDHOME.png)
 
-### `npm run build`
+#### Plant Content Type
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/PLANTS1.png)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/PLANTS2.png)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/PLANTS3.png)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/PLANTS4.png)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/PLANTS5.png)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/PLANTS6.png)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/PLANTS7.png)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/PLANTS8.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Waypoint Content Type
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/WAYPOINTS1.png)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/WAYPOINTS2.png)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/WAYPOINTS3.png)
 
-### `npm run eject`
+#### Learn More Content Type
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/LEARNMORE1.png)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/LEARNMORE2.png)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/LEARNMORE3.png)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Users
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/USERS1.png)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/USERS2.png)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/USERS3.png)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### Profile
 
-## Learn More
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/PROFILE.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Tags
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/TAGS.png)
 
-### Code Splitting
+#### Locations
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/LOCATIONS.png)
 
-### Analyzing the Bundle Size
+#### Media Uploads
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/MEDIA1.png)
+![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/MEDIA2.png)
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Installation
