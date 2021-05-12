@@ -92,3 +92,20 @@ This specific repository houses the client-side user interface of the mobile app
 ![image](https://raw.githubusercontent.com/BCIT-SSD-2020-21/indigenous-plant-go-cms/main/planning/client/wireframes/MEDIA2.png)
 
 ### Installation
+#### Local Installment
+1. Clone the repo with the following code:
+```
+git clone https://github.com/BCITConstruction/indigenousplantgo-cms-client.git
+```
+And navigate into the folder:
+```
+cd indigenousplantgo-cms-client
+```
+2. Install all the node module with `npm install`.
+3. Add a .env file with the base url of your server-side code.
+  - If you run the server-side locally, the link will be `http://localhost:8080/api`.
+  - If you run the server-side on heroku, the link will be where the the url provided by heroku followed by /api.
+```
+REACT_APP_BASE_URL="<Your link>/api"
+```
+4. Running `npm start` now should run it at `http://localhost:3000`.
