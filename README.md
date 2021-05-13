@@ -188,4 +188,4 @@ Key = "REACT_APP_BASE_URL"
 Value : <-Your-Heroku-URL->
 ```
 5. Deploy the site
->>>>>>> b721856ba02e17de35a970e48cb14b4837646a6b
+
