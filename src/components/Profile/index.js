@@ -44,7 +44,7 @@ export default function Profile({
         )}
       <DashHeader title={"My Profile"} />
       <p style={{ maxWidth: 450 }}>
-        To update your profile, edit the fields below and click{" "}
+        To update your profile, edit the fields below and click <br></br>
         <span
           style={{
             color: "var(--lightprimary)",

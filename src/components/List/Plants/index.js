@@ -202,7 +202,7 @@ export default function ListPlants({
             <h3>Title</h3>
           </div>
           <div className="table__col head author">
-            <h3>Author</h3>
+            <h3>Visibility</h3>
           </div>
           <div className="table__col head categories">
             <h3>Categories</h3>

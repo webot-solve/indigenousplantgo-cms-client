@@ -59,15 +59,7 @@ export default function Table({
                 </span>
               </div>
               <div className="table__col author">
-                <p>
-                  {plant &&
-                  plant.revision_history.length > 0 &&
-                  plant.revision_history[plant.revision_history.length - 1]
-                    .user[0]
-                    ? plant.revision_history[plant.revision_history.length - 1]
-                        .user[0].user_name
-                    : "deleted user"}
-                </p>
+                <p>{plant.isPublish === true ? "Visible" : "Hidden"}</p>
               </div>
               <div className="table__col categories">
                 <p>

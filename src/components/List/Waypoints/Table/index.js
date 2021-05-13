@@ -61,17 +61,7 @@ export default function Table({
                 </span>
               </div>
               <div className="table__col author">
-                <p>
-                  {waypoint &&
-                  waypoint.revision_history.length > 0 &&
-                  waypoint.revision_history[
-                    waypoint.revision_history.length - 1
-                  ].user[0]
-                    ? waypoint.revision_history[
-                        waypoint.revision_history.length - 1
-                      ].user[0].user_name
-                    : "user not found"}
-                </p>
+                <p>{waypoint.isPublish === true ? "Visible" : "Hidden"}</p>
               </div>
               <div className="table__col categories">
                 <p>

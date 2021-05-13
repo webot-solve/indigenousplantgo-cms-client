@@ -86,7 +86,7 @@ export default function ListTags({
         />
       </fieldset>
       <button onClick={() => applyEdit()} className="field__button">
-        Update category
+        Update tag
       </button>
       <button
         onClick={() => closeModal()}
