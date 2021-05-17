@@ -18,7 +18,7 @@ export default function Table({
         waypointData.length > 0 &&
         waypointData.map((waypoint, index) => {
           const lastRevision = {
-            date: parseDate(waypoint.revision_history[0].date),
+            date: parseDate(waypoint.revision_history[0]?.date),
             user: waypoint.revision_history[0].user[0]?.user_name,
           };
 
