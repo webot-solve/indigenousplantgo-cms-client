@@ -18,7 +18,7 @@ export default function Table({
         plantData.length > 0 &&
         plantData.map((plant, index) => {
           const lastRevision = {
-            date: parseDate(plant.revision_history[0].date),
+            date: parseDate(plant.revision_history[0]?.date),
             user: plant.revision_history[0].user[0]?.user_name,
           };
 
@@ -75,8 +75,10 @@ export default function Table({
                 <p>
                   {plant && plant.revision_history.length > 0 && (
                     <>
-                      {lastRevision.date} by{" "}
-                      {lastRevision.user ? lastRevision.user : "deleted user"}
+                      {typeof lastRevision.date === "string" &&
+                      typeof lastRevision.user === "string"
+                        ? `${lastRevision.date} by ${lastRevision.user}`
+                        : "Sorry, could not fetch revision history."}
                     </>
                   )}
                 </p>

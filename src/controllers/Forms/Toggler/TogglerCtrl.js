@@ -5,12 +5,12 @@ export default function TogglerCtrl({ label, setter, eValue }) {
   const [value, setValue] = useState(true);
 
   useEffect(() => {
-    setValue(eValue);
+    if (value !== undefined) setValue(eValue);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eValue]);
 
   useEffect(() => {
-    setter(value);
+    if (value !== undefined) setter(value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
