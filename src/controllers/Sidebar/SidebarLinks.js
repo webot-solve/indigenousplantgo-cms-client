@@ -66,26 +66,26 @@ export const sidebarLinks = [
   //     },
   //   ],
   // },
-  // LEARN MORE
-  // {
-  //   label: "learnmore",
-  //   formattedLabel: "Learn More",
-  //   navigationPath: "/learnmore",
-  //   subItems: [
-  //     {
-  //       label: "All Learn More",
-  //       navigationPath: "/learnmore",
-  //     },
-  //     {
-  //       label: "Add New",
-  //       navigationPath: "/learnmore/add",
-  //     },
-  //     {
-  //       label: "Categories",
-  //       navigationPath: "/learnmore/categories",
-  //     },
-  //   ],
-  // },
+  // LEARN MORE v2
+  {
+    label: "learnmore",
+    formattedLabel: "Learn More",
+    navigationPath: "/learnmore",
+    subItems: [
+      {
+        label: "All Learn More",
+        navigationPath: "/learnmore",
+      },
+      {
+        label: "Add New",
+        navigationPath: "/learnmore/add",
+      },
+      {
+        label: "Categories",
+        navigationPath: "/learnmore/categories",
+      },
+    ],
+  },
   // USERS
   {
     label: "users",
