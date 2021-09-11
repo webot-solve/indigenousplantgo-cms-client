@@ -1191,3 +1191,21 @@ export const bulkDeleteWaypoints = async (array) => {
     };
   }
 };
+
+
+/* =================================================
+LEARN MORE
+==================================================*/
+
+export const getAllLearnMore = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/learn_more`);
+
+    return response.data;
+  } catch (error) {
+    console.log(error.reponse);
+    return {
+      error: error.response,
+    };
+  }
+};
