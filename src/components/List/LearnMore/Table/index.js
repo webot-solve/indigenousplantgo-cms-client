@@ -5,9 +5,8 @@ import { Link } from "react-router-dom";
 export default function Table({
   learnMoreData
 }) {
-  console.log(learnMoreData)
   return(
-    <ul>
+    <ul className="table__list">
       { learnMoreData 
         && learnMoreData.length > 0
         && learnMoreData.map((learnMore, index) => {
@@ -30,21 +29,21 @@ export default function Table({
                   type="button" 
                   value={learnMore._id}
                   to={`/learn_more/edit/${learnMore._id}`}
-                  >
-                    Edit&nbsp;
+                >
+                  Edit&nbsp;
                 </Link>
                 <button
                   type="button" 
                   value={learnMore._id}
                 >
-                    &nbsp;Delete
+                  &nbsp;Delete
                 </button>
               </span>
             </div>
             <div className="table__col author">
               <p>{learnMore.isPublish === true ? "Visible" : "Hidden"}</p>
             </div>
-            <div>
+            <div className="table__col categories"> 
               <p>
                 {learnMore.categories
                   .map((category) => category.category_name)
@@ -70,13 +69,9 @@ export default function Table({
                   }
                 </p>
               </div>
-          
-           
-           
           </li>
         ) 
         })
-        
       }
     </ul>
   );
