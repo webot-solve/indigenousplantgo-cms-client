@@ -1,15 +1,20 @@
 import React from "react";
 import DashHeader from "../../DashHeader";
 import Table from "./Table";
+import { useHistory } from "react-router-dom";
+import { Dropdown, Input} from "semantic-ui-react";
 
 export default function ListLearnMore({
-  learnMoreData
-}){
+  learnMoreData,
 
+}){
+  const history = useHistory();
   return (
     <div>
       <DashHeader
         title="Learn More"
+        action="Add New"
+        method={() => history.push("/learnmore/add")}
       />
       <div style={{ marginBottom: 10, display: "flex" }}>
         <p>
@@ -17,6 +22,45 @@ export default function ListLearnMore({
         </p>
       </div>
 
+      <div className="table__controls">
+        <div style={{ display: "flex" }}>
+          {/* BULK ACTION */}
+          <div className="table__action">
+            <Dropdown 
+              placeholder={"Bulk Actions"}
+              selection
+              options={[
+                { key: "default", value: "default", text: "Bulk Actions" },
+                { key: "delete", value: "delete", text: "Delete" },
+              ]}
+              />
+            <button>Apply</button>
+          </div>
+          {/* FILTER ACTION BY CATEGORIES */}
+          <div className="table__action">
+            <Dropdown
+              placeholder={"All Categories"}
+              selection
+              options={[
+                { key: "default", value: "default", text: "All Categories" },
+                // ...categories,
+              ]}
+            />
+            <button>Filter</button>
+          </div>
+
+          {/* SEARCH ACTION */}
+          <div className="table__action">
+            <Input
+              placeholder={`Enter search query`}
+              style={style.input}
+            />
+             <button>Search</button>
+          </div>
+         
+        </div>
+      </div>
+      {/* TABLE | Learn More Data */}
       <form>
         <div className="table__heading table__row">
           <div className="table__col head select">
@@ -46,3 +90,25 @@ export default function ListLearnMore({
     </div>
   )
 }
+
+const style = {
+  input: {
+    width: "100%",
+    minWidth: "300px",
+    color: "var(--darksecondary)",
+  },
+  label: {
+    color: "var(--darksecondary)",
+    margin: 0,
+    fontSize: 11,
+    marginBottom: "3px",
+  },
+  fieldset: {
+    marginBottom: "10px",
+    padding: 0,
+  },
+  req: {
+    color: "red",
+    fontSize: 14,
+  },
+};
