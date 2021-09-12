@@ -1,5 +1,6 @@
 import React from "react";
 import DashHeader from "../../DashHeader";
+import Table from "./Table";
 
 export default function ListLearnMore({
   learnMoreData
@@ -14,13 +15,34 @@ export default function ListLearnMore({
         <p>
           <strong>Results</strong> ({learnMoreData.length}){" "}
         </p>
-       
-        {/* {loading && <Loader active inline size="tiny" />} */}
       </div>
 
-      {
-          learnMoreData.map( item => {return `hello`})
-        }
+      <form>
+        <div className="table__heading table__row">
+          <div className="table__col head select">
+            <input
+                type="checkbox"
+              />
+          </div>
+          <div className="table__col head title">
+            <h3>Title</h3>
+          </div>
+          <div className="table__col head author">
+            <h3>Visibility</h3>
+          </div>
+          <div className="table__col head categories">
+            <h3>Categories</h3>
+          </div>
+          <div className="table__col head tags">
+            <h3>Tags</h3>
+          </div>
+          <div className="table__col head updated">
+            <h3>Last Updated</h3>
+          </div>
+        </div>
+        <Table learnMoreData={learnMoreData}/>
+
+      </form>
     </div>
   )
 }
