@@ -2,10 +2,19 @@ import React from "react";
 import DashHeader from "../../DashHeader";
 import Table from "./Table";
 import { useHistory } from "react-router-dom";
-import { Dropdown, Input} from "semantic-ui-react";
+import { Dropdown, Input, Icon} from "semantic-ui-react";
 
 export default function ListLearnMore({
+  // Data to List: learnMoreData
   learnMoreData,
+
+   // PAGINATION -- Attributes
+   hasPages,
+   pages,
+   page,
+   // PAGINATION -- Methods
+   prevPage,
+   nextPage,
 
 }){
   const history = useHistory();
@@ -84,9 +93,32 @@ export default function ListLearnMore({
             <h3>Last Updated</h3>
           </div>
         </div>
-        <Table learnMoreData={learnMoreData}/>
-
+        <Table 
+          learnMoreData={ hasPages ? pages[page-1] : learnMoreData}
+          
+        />
       </form>
+      {/* PAGINATION */}
+      {hasPages && (
+        <div className="pagination__control">
+          <div>
+            <p style={{ marginBottom: "7px" }}>
+              Page {page} of {pages.length}
+            </p>
+            <div className="control">
+              <button onClick={() => prevPage()}>
+                <Icon name="caret left" />
+              </button>
+              <span>{page}</span>
+              <button onClick={() => nextPage()}>
+                <Icon name="caret right" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
     </div>
   )
 }
