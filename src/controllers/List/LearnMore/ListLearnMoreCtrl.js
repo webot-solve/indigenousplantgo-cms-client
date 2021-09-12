@@ -15,6 +15,8 @@ export default function ListLearnMoreCtrl(){
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(1);
 
+  const [searchQuery, setSearchQuery] = useState("");
+
   const queryLearnMore = async () => {
     if (!isMounted) return;
     setLoading(true);
@@ -44,6 +46,11 @@ export default function ListLearnMoreCtrl(){
   }, [learnMoreData]);
 
   useEffect(() => {
+    if (!searchQuery) applyFilter();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchQuery]);
+
+  useEffect(() => {
     setPage(1);
     formatPages();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,7 +58,8 @@ export default function ListLearnMoreCtrl(){
 
 
 
-
+  // METHODS 
+  
   const formatPages = () => {
     const dataLength = learnMoreData_.length;
     if (dataLength < 5) return setHasPages(false);
@@ -91,6 +99,21 @@ export default function ListLearnMoreCtrl(){
     setPage(currentPage);
   };
 
+  const handleQueryChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const applyFilter = () => {
+    const searchData = learnMoreData.filter(item => 
+      item.learn_more_title
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()));
+
+    setLearnMoreData_(searchData)
+  }
+
+
+
   return(
     <ListLearnMore
       learnMoreData = {learnMoreData_}
@@ -102,6 +125,10 @@ export default function ListLearnMoreCtrl(){
 
       prevPage={prevPage}
       nextPage={nextPage}
+
+      searchQuery={searchQuery}
+      handleQueryChange={handleQueryChange}
+      applyFilters={applyFilter}
     />
   );
 }

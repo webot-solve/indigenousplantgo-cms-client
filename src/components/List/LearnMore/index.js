@@ -8,13 +8,21 @@ export default function ListLearnMore({
   // Data to List: learnMoreData
   learnMoreData,
 
-   // PAGINATION -- Attributes
-   hasPages,
-   pages,
-   page,
-   // PAGINATION -- Methods
-   prevPage,
-   nextPage,
+  // PAGINATION -- Attributes
+  hasPages,
+  pages,
+  page,
+  // PAGINATION -- Methods
+  prevPage,
+  nextPage,
+
+  // SEARCH -- Attributes
+  searchQuery,
+  // SEARCH -- Methods
+  handleQueryChange,
+
+  // FILTERS -- Methods
+  applyFilters,
 
 }){
   const history = useHistory();
@@ -63,8 +71,10 @@ export default function ListLearnMore({
             <Input
               placeholder={`Enter search query`}
               style={style.input}
+              value={searchQuery}
+              onChange={(e) => handleQueryChange(e)}
             />
-             <button>Search</button>
+             <button onClick={() => applyFilters()}>Search</button>
           </div>
          
         </div>
