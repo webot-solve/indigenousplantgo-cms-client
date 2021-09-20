@@ -3,11 +3,24 @@ import DashHeader from "../../DashHeader";
 import Table from "./Table";
 import { useHistory } from "react-router-dom";
 import { Dropdown, Input, Icon} from "semantic-ui-react";
+import { ResetIcon } from "../../../icons";
 
 export default function ListLearnMore({
   // Data to List: learnMoreData
   learnMoreData,
-
+  
+  // SEARCH -- Attributes
+  searchQuery,
+  clearSearch,
+  // SEARCH -- Methods
+  handleQueryChange,
+  // FILTERS -- Methods
+  handleFilterChange,
+  resetFilters,
+  applyFilters,
+  // FILTERS -- Attributes
+  categoryFilter,
+  categories,
   // PAGINATION -- Attributes
   hasPages,
   pages,
@@ -16,17 +29,10 @@ export default function ListLearnMore({
   prevPage,
   nextPage,
 
-  // SEARCH -- Attributes
-  searchQuery,
-  // SEARCH -- Methods
-  handleQueryChange,
-  // FILTERS -- Methods
-  handleFilterChange,
-  applyFilters,
+  //
+  
 
-  // FILTERS -- Attributes
-  categories,
-  categoryFilter,
+
 
 }){
   const history = useHistory();
@@ -59,6 +65,17 @@ export default function ListLearnMore({
           </div>
           {/* FILTER ACTION BY CATEGORIES */}
           <div className="table__action">
+            {categoryFilter !== "default" && (
+                <button
+                  onClick={() => resetFilters()}
+                  className="sub__action resets"
+                >
+                  <span>
+                    <ResetIcon />
+                  </span>
+                  Reset Filters
+                </button>
+              )}
             <Dropdown
               placeholder={"All Categories"}
               selection
@@ -75,6 +92,11 @@ export default function ListLearnMore({
 
           {/* SEARCH ACTION */}
           <div className="table__action">
+          {searchQuery && (
+              <button onClick={() => clearSearch()} className="sub__action">
+                Clear search
+              </button>
+            )}
             <Input
               placeholder={`Enter search query`}
               style={style.input}

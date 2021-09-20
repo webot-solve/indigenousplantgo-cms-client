@@ -10,20 +10,17 @@ export default function ListLearnMoreCtrl(){
   const [learnMoreData, setLearnMoreData] = useState([]);
   const [learnMoreData_, setLearnMoreData_] = useState([]);
 
-  const [loading, setLoading] = useState(false);
+  const [formattedCategories, setFormattedCategories] = useState([]);
+  const [categoryFilter, setCategoryFilter] = useState("default");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [hasPages, setHasPages] = useState(false);
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(1);
-
-  const [searchQuery, setSearchQuery] = useState("");
-
   const [eCategories, setECategories] = useState([]);
-  const [formattedCategories, setFormattedCategories] = useState([]);
-  const [categoryFilter, setCategoryFilter] = useState("default");
-
+  
+  const [loading, setLoading] = useState(false);
  
-
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     isMounted = true;
@@ -58,10 +55,7 @@ export default function ListLearnMoreCtrl(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [learnMoreData_]);
 
-
-
-  // METHODS 
-  
+  // ================== METHODS ========================  
   const queryLearnMore = async () => {
     if (!isMounted) return;
     setLoading(true);
@@ -155,9 +149,17 @@ export default function ListLearnMoreCtrl(){
          )
       })
     
-    console.log(searchData)
     setLearnMoreData_(searchData)
   }
+
+  const resetFilters = () => {
+    setLearnMoreData_(learnMoreData);
+    setCategoryFilter("default");
+  };
+
+  const clearSearch = () => {
+    setSearchQuery("");
+  };
 
   const nextPage = () => {
     let currentPage = page;
@@ -203,6 +205,9 @@ export default function ListLearnMoreCtrl(){
       handleQueryChange={handleQueryChange}
       handleFilterChange={handleFilterChange}
       applyFilters={applyFilter}
+
+      resetFilters={resetFilters}
+      clearSearch={clearSearch}
 
       categories={formattedCategories}
       categoryFilter={categoryFilter}
