@@ -20,17 +20,9 @@ export default function ListLearnMoreCtrl(){
 
   const [eCategories, setECategories] = useState([]);
   const [formattedCategories, setFormattedCategories] = useState([]);
+  const [categoryFilter, setCategoryFilter] = useState("default");
 
-  const queryLearnMore = async () => {
-    if (!isMounted) return;
-    setLoading(true);
-    const result = await getAllLearnMore();
-    if (!isMounted) return;
-    setLoading(false);
-    if (result.error) return;
-    if (result.length < 1) setLearnMoreData([]);
-    setLearnMoreData(result);
-  };
+ 
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,6 +62,24 @@ export default function ListLearnMoreCtrl(){
 
   // METHODS 
   
+  const queryLearnMore = async () => {
+    if (!isMounted) return;
+    setLoading(true);
+    const result = await getAllLearnMore();
+    if (!isMounted) return;
+    setLoading(false);
+    if (result.error) return;
+    if (result.length < 1) setLearnMoreData([]);
+    setLearnMoreData(result);
+  };
+
+  const queryCategories = async () => {
+    const result = await getCategoryGroup("learnMore");
+    if (result.error) return;
+    if (!isMounted) return;
+    setECategories(result);
+  };
+  
   const formatPages = () => {
     const dataLength = learnMoreData_.length;
     if (dataLength < 5) return setHasPages(false);
@@ -93,6 +103,62 @@ export default function ListLearnMoreCtrl(){
     setPages(pages);
   };
 
+  const formatCategories = () => {
+    const formatted = eCategories.map((category) => {
+      return {
+        ...category,
+        key: category._id,
+        value: category.category_name,
+        text: category.category_name,
+      };
+    });
+
+    setFormattedCategories(formatted);
+  };
+
+  const handleQueryChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleFilterChange = (e, data) => {
+    setCategoryFilter(data.value);
+  };
+
+  const applyFilter = () => {
+    if(categoryFilter === "default" && !searchQuery){
+      setLearnMoreData_(learnMoreData)
+      return;
+    }
+
+    const searchData = learnMoreData
+      //filter by SEARCH TERM
+      .filter(item => {
+        if(!searchQuery) {
+          return item;
+        } 
+        
+        return item.learn_more_title
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
+      })
+  
+      // filter by CATEGORY
+      .filter(item => {
+        if(categoryFilter === "default"){
+          return item;
+        }
+        return (item.categories.map( categoryItem => categoryItem.category_name)
+          .join()
+         .toLowerCase()
+         .includes(categoryFilter.toLowerCase())
+        
+         )
+      })
+    
+    console.log(searchData)
+    setLearnMoreData_(searchData)
+  }
+
   const nextPage = () => {
     let currentPage = page;
     if (currentPage >= pages.length) return;
@@ -109,40 +175,15 @@ export default function ListLearnMoreCtrl(){
     setPage(currentPage);
   };
 
-  const handleQueryChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
+  
 
-  const applyFilter = () => {
-    const searchData = learnMoreData.filter(item => 
-      item.learn_more_title
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()));
-
-    setLearnMoreData_(searchData)
-  }
+  
 
 
   
-  const queryCategories = async () => {
-    const result = await getCategoryGroup("learnMore");
-    if (result.error) return;
-    if (!isMounted) return;
-    setECategories(result);
-  };
+  
 
-  const formatCategories = () => {
-    const formatted = eCategories.map((category) => {
-      return {
-        ...category,
-        key: category._id,
-        value: category.category_name,
-        text: category.category_name,
-      };
-    });
-
-    setFormattedCategories(formatted);
-  };
+ 
 
 
 
@@ -160,9 +201,11 @@ export default function ListLearnMoreCtrl(){
 
       searchQuery={searchQuery}
       handleQueryChange={handleQueryChange}
+      handleFilterChange={handleFilterChange}
       applyFilters={applyFilter}
 
       categories={formattedCategories}
+      categoryFilter={categoryFilter}
     />
   );
 }

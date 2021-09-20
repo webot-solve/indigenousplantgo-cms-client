@@ -20,12 +20,13 @@ export default function ListLearnMore({
   searchQuery,
   // SEARCH -- Methods
   handleQueryChange,
-
   // FILTERS -- Methods
+  handleFilterChange,
   applyFilters,
 
   // FILTERS -- Attributes
   categories,
+  categoryFilter,
 
 }){
   const history = useHistory();
@@ -61,12 +62,15 @@ export default function ListLearnMore({
             <Dropdown
               placeholder={"All Categories"}
               selection
+              search
+              onChange={(e, data) => handleFilterChange(e, data)}
+              value={categoryFilter}
               options={[
                 { key: "default", value: "default", text: "All Categories" },
                 ...categories,
               ]}
             />
-            <button>Filter</button>
+            <button onClick={() => applyFilters()}>Filter</button>
           </div>
 
           {/* SEARCH ACTION */}
