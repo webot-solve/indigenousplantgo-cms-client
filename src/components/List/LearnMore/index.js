@@ -29,7 +29,10 @@ export default function ListLearnMore({
   prevPage,
   nextPage,
 
-  //
+  // BATCH SELECT -- Attributes
+  selectedLearnMore,
+  // BATCH SELECT -- Methods
+  handleSelected,
   
 
 
@@ -134,6 +137,8 @@ export default function ListLearnMore({
         </div>
         <Table 
           learnMoreData={ hasPages ? pages[page-1] : learnMoreData}
+          handleSelected={handleSelected}
+          selectedLearnMore={selectedLearnMore}
           
         />
       </form>

@@ -14,6 +14,8 @@ export default function ListLearnMoreCtrl(){
   const [categoryFilter, setCategoryFilter] = useState("default");
   const [searchQuery, setSearchQuery] = useState("");
 
+  const [selectedLearnMore, setSelectedLearnMore] = useState([]);
+
   const [hasPages, setHasPages] = useState(false);
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(1);
@@ -161,6 +163,19 @@ export default function ListLearnMoreCtrl(){
     setSearchQuery("");
   };
 
+  const handleSelected = (e) => {
+    const id = e.target.value;
+    let newSelected = [...selectedLearnMore];
+
+    if (selectedLearnMore.includes(id)) {
+      newSelected = newSelected.filter((item) => item !== id);
+    } else {
+      newSelected = [...newSelected, id];
+    }
+
+    setSelectedLearnMore(newSelected);
+  };
+
   const nextPage = () => {
     let currentPage = page;
     if (currentPage >= pages.length) return;
@@ -211,6 +226,10 @@ export default function ListLearnMoreCtrl(){
 
       categories={formattedCategories}
       categoryFilter={categoryFilter}
+
+      selectedLearnMore={selectedLearnMore}
+      handleSelected={handleSelected}
+
     />
   );
 }
