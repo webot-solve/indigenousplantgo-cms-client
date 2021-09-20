@@ -176,6 +176,23 @@ export default function ListLearnMoreCtrl(){
     setSelectedLearnMore(newSelected);
   };
 
+   const batchSelect = () => {
+    const resourceIds = learnMoreData.map((learnMore) => learnMore._id);
+    const selectedIds = selectedLearnMore;
+
+    const allSelected =
+      resourceIds.length === selectedIds.length &&
+      resourceIds.every(function (element, index) {
+        return element === selectedIds[index];
+      });
+
+    if (!allSelected) {
+      setSelectedLearnMore(resourceIds);
+    } else {
+      setSelectedLearnMore([]);
+    }
+  };
+
   const nextPage = () => {
     let currentPage = page;
     if (currentPage >= pages.length) return;
@@ -229,6 +246,7 @@ export default function ListLearnMoreCtrl(){
 
       selectedLearnMore={selectedLearnMore}
       handleSelected={handleSelected}
+      batchSelect={batchSelect}
 
     />
   );

@@ -33,6 +33,7 @@ export default function ListLearnMore({
   selectedLearnMore,
   // BATCH SELECT -- Methods
   handleSelected,
+  batchSelect,
   
 
 
@@ -117,6 +118,8 @@ export default function ListLearnMore({
           <div className="table__col head select">
             <input
                 type="checkbox"
+                onChange={(e) => batchSelect(e)}
+                value={"select all"}
               />
           </div>
           <div className="table__col head title">
