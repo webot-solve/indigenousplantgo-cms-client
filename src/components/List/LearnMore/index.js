@@ -24,6 +24,9 @@ export default function ListLearnMore({
   // FILTERS -- Methods
   applyFilters,
 
+  // FILTERS -- Attributes
+  categories,
+
 }){
   const history = useHistory();
   return (
@@ -60,7 +63,7 @@ export default function ListLearnMore({
               selection
               options={[
                 { key: "default", value: "default", text: "All Categories" },
-                // ...categories,
+                ...categories,
               ]}
             />
             <button>Filter</button>

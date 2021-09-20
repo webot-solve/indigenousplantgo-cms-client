@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import ListLearnMore from "../../../components/List/LearnMore/index";
 import {
-  getAllLearnMore
+  getAllLearnMore,
+  getCategoryGroup,
 } from "../../../network"
 
 export default function ListLearnMoreCtrl(){
@@ -16,6 +17,9 @@ export default function ListLearnMoreCtrl(){
   const [page, setPage] = useState(1);
 
   const [searchQuery, setSearchQuery] = useState("");
+
+  const [eCategories, setECategories] = useState([]);
+  const [formattedCategories, setFormattedCategories] = useState([]);
 
   const queryLearnMore = async () => {
     if (!isMounted) return;
@@ -32,6 +36,7 @@ export default function ListLearnMoreCtrl(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
     isMounted = true;
     queryLearnMore();
+    queryCategories();
     formatPages();
 
     return () => {
@@ -49,6 +54,11 @@ export default function ListLearnMoreCtrl(){
     if (!searchQuery) applyFilter();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
+
+  useEffect(() => {
+    formatCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eCategories]);
 
   useEffect(() => {
     setPage(1);
@@ -113,6 +123,28 @@ export default function ListLearnMoreCtrl(){
   }
 
 
+  
+  const queryCategories = async () => {
+    const result = await getCategoryGroup("learnMore");
+    if (result.error) return;
+    if (!isMounted) return;
+    setECategories(result);
+  };
+
+  const formatCategories = () => {
+    const formatted = eCategories.map((category) => {
+      return {
+        ...category,
+        key: category._id,
+        value: category.category_name,
+        text: category.category_name,
+      };
+    });
+
+    setFormattedCategories(formatted);
+  };
+
+
 
   return(
     <ListLearnMore
@@ -129,6 +161,8 @@ export default function ListLearnMoreCtrl(){
       searchQuery={searchQuery}
       handleQueryChange={handleQueryChange}
       applyFilters={applyFilter}
+
+      categories={formattedCategories}
     />
   );
 }
