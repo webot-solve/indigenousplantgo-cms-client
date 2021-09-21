@@ -4,6 +4,7 @@ import {
   getLearnMore,
   getImages, 
   getAudios,
+  getVideos,
 
 } from "../../../network";
 import { useParams } from "react-router-dom";
@@ -23,6 +24,7 @@ export default function EditLearnMoreCtrl(){
 
   const [images, setImages] = useState([]);
   const [audioFiles, setAudioFiles] = useState([]);
+  const [videos, setVideos] = useState([]);
 
 
   const [learnMoreTitle, setLearnMoreTitle] = useState("");
@@ -36,6 +38,7 @@ export default function EditLearnMoreCtrl(){
   // ===============================================================
   const [eImages, setEImages] = useState([]);
   const [eAudios, setEAudios] = useState([]);
+  const [eVideos, setEVideos] = useState([]);
 
    // Error handling
    const [directive, setDirective] = useState(null);
@@ -87,6 +90,13 @@ export default function EditLearnMoreCtrl(){
     setEAudios(result);
   };
 
+  const queryVideos = async () => {
+    const result = await getVideos();
+    if (result.error) return;
+    if (!isMounted) return;
+    setEVideos(result);
+  };
+
 
   // ===============================================================
   // INPUT WATCHERS AND SETTERS
@@ -115,6 +125,11 @@ export default function EditLearnMoreCtrl(){
     if (!isMounted) return;
     setAudioFiles(mappedData);
   };
+  const videosChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    if (!isMounted) return;
+    setVideos(mappedData);
+  };
 
   return (
     <EditLearnMore
@@ -127,15 +142,19 @@ export default function EditLearnMoreCtrl(){
 
       imagesChanged={imagesChanged}
       audioFilesChanged={audioFilesChanged}
+      videosChanged={videosChanged}
 
       // SELECTION DATA
       eImages={eImages}
       eAudios={eAudios}
+      eVideos={eVideos}
 
       // QUERIES
       queryLearnMore={queryLearnMore}
       queryImages={queryImages}
       queryAudios={queryAudios}
+      queryVideos={queryVideos}
+      
 
       loading={loading}
       directive={directive}

@@ -17,18 +17,20 @@ export default function EditLearnMore({
 
   imagesChanged,
   audioFilesChanged,
+  videosChanged,
 
   descriptionChanged,
 
   // SELECTION DATA
   eImages,
   eAudios,
+  eVideos,
 
   // QUERIES
   queryImages,
   queryAudios,
+  queryVideos,
 
-  
  
 
 }){
@@ -80,6 +82,14 @@ export default function EditLearnMore({
             query={queryAudios}
             selected={learnMoreData.audio_files}
             setter={(data) => audioFilesChanged(data)}
+          />
+           <MediaPickerCtrl
+            label={"video"}
+            dataLabel={"video"}
+            data={eVideos}
+            query={queryVideos}
+            selected={learnMoreData.videos}
+            setter={(data) => videosChanged(data)}
           />
         
         </div>
