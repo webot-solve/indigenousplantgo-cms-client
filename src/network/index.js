@@ -1210,6 +1210,19 @@ export const getAllLearnMore = async () => {
   }
 };
 
+export const getLearnMore = async (id) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/learn_more/${id}`);
+
+    return response.data;
+  } catch (error) {
+    console.log(error.reponse);
+    return {
+      error: error.response,
+    };
+  }
+};
+
 export const deleteLearnMore = async (id) => {
   const token = getToken();
 
