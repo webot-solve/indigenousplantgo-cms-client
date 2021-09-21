@@ -1,6 +1,10 @@
 import React, { useState, useEffect }  from 'react';
 import EditLearnMore from "../../../components/Edit/LearnMore";
-import { getLearnMore } from "../../../network";
+import { 
+  getLearnMore,
+  getImages, 
+
+} from "../../../network";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
@@ -16,9 +20,17 @@ export default function EditLearnMoreCtrl(){
   // @desc form control data
   // ===============================================================
 
+  const [images, setImages] = useState([]);
   const [learnMoreTitle, setLearnMoreTitle] = useState("");
   const [description, setDescription] = useState("");
   const [customFields, setCustomFields] = useState([]);
+
+
+  // ===============================================================
+  // SELECTION DATA
+  // @desc data that appears as options in select boxes.
+  // ===============================================================
+  const [eImages, setEImages] = useState([]);
 
    // Error handling
    const [directive, setDirective] = useState(null);
@@ -43,6 +55,11 @@ export default function EditLearnMoreCtrl(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
+  // ===============================================================
+  // NETWORK QUERIES FOR EXISTING DATA
+  // @desc queries for existing data in the database, and delegates to selection data
+  // ===============================================================
   const queryLearnMore = async () => {
     if (!learnMoreId) return;
     const result = await getLearnMore(learnMoreId);
@@ -50,6 +67,18 @@ export default function EditLearnMoreCtrl(){
     if (!isMounted) return;
     setLearnMoreData(result);
   };
+
+  const queryImages = async () => {
+    const result = await getImages();
+    if (result.error) return;
+    if (!isMounted) return;
+    setEImages(result);
+  };
+
+  // ===============================================================
+  // INPUT WATCHERS AND SETTERS
+  // @desc functions that watch updates in children components, and sets them here.
+  // ===============================================================
 
   const learnMoreTitleChanged = (data) => {
     if (!isMounted) return;
@@ -63,19 +92,29 @@ export default function EditLearnMoreCtrl(){
     if (!isMounted) return;
     setCustomFields(data);
   };
+  const imagesChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    if (!isMounted) return;
+    setImages(mappedData);
+  };
 
   return (
     <EditLearnMore
+      
+      learnMoreData = {learnMoreData}
       // METHODS
       learnMoreTitleChanged ={learnMoreTitleChanged}
       descriptionChanged={descriptionChanged}
       customFieldsChanged={customFieldsChanged}
+      imagesChanged={imagesChanged}
 
       // SELECTION DATA
-      learnMoreData = {learnMoreData}
+      eImages={eImages}
 
       // QUERIES
       queryLearnMore={queryLearnMore}
+      queryImages={queryImages}
+
       loading={loading}
       directive={directive}
     

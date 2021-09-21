@@ -15,8 +15,16 @@ export default function EditLearnMore({
   learnMoreTitleChanged,
   customFieldsChanged,
 
+  imagesChanged,
+
   descriptionChanged,
 
+  // SELECTION DATA
+  eImages,
+
+  // QUERIES
+  queryImages,
+ 
 
 }){
   return(
@@ -35,23 +43,35 @@ export default function EditLearnMore({
       />
       <div className="form__grid">
         <div className="col">
-            <TextInputCtrl
-              label={"Learn More Title"}
-              eValue={learnMoreData.learn_more_title}
-              setter={(data) => learnMoreTitleChanged(data)}
-            />
-            <TextAreaCtrl
+          <TextInputCtrl
+            label={"Learn More Title"}
+            eValue={learnMoreData.learn_more_title}
+            setter={(data) => learnMoreTitleChanged(data)}
+          />
+          <TextAreaCtrl
             label={"Description"}
             eValue={learnMoreData.description}
             setter={(data) => descriptionChanged(data)}
-            />
-            <CustomFieldPickerCtrl
+          />
+          <CustomFieldPickerCtrl
             label={"Custom Field"}
             selected={learnMoreData.custom_fields}
             setter={(data) => customFieldsChanged(data)}
+         />
+        </div>
+        <div className="col">
+          <MediaPickerCtrl
+            label={"image"}
+            dataLabel={"image"}
+            data={eImages}
+            query={queryImages}
+            selected={learnMoreData.images}
+            setter={(data) => imagesChanged(data)}
           />
-          
-          </div>
+        
+        </div>
+
+
       </div>
 
     </div>
