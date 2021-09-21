@@ -14,6 +14,8 @@ export default function EditLearnMore({
   learnMoreData,
   learnMoreTitleChanged,
 
+  descriptionChanged,
+
 
 }){
   return(
@@ -37,6 +39,11 @@ export default function EditLearnMore({
               eValue={learnMoreData.learn_more_title}
               setter={(data) => learnMoreTitleChanged(data)}
             />
+             <TextAreaCtrl
+            label={"Description"}
+            eValue={learnMoreData.description}
+            setter={(data) => descriptionChanged(data)}
+          />
           
           </div>
       </div>

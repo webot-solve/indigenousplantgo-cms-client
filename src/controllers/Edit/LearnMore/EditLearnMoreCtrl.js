@@ -16,7 +16,8 @@ export default function EditLearnMoreCtrl(){
   // @desc form control data
   // ===============================================================
 
-  const [learnMoreTitle, setLearnMoreTitle] = useState("")
+  const [learnMoreTitle, setLearnMoreTitle] = useState("");
+  const [description, setDescription] = useState("");
 
    // Error handling
    const [directive, setDirective] = useState(null);
@@ -26,7 +27,6 @@ export default function EditLearnMoreCtrl(){
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     isMounted = true;
-
     if (isMounted) {
       (async () => {
         setLoading(true);
@@ -50,16 +50,21 @@ export default function EditLearnMoreCtrl(){
     setLearnMoreData(result);
   };
 
-
   const learnMoreTitleChanged = (data) => {
     if (!isMounted) return;
     setLearnMoreTitle(data);
+  };
+
+  const descriptionChanged = (data) => {
+    if (!isMounted) return;
+    setDescription(data);
   };
 
   return (
     <EditLearnMore
       // METHODS
       learnMoreTitleChanged ={learnMoreTitleChanged}
+      descriptionChanged={descriptionChanged}
 
       // SELECTION DATA
       learnMoreData = {learnMoreData}
