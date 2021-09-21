@@ -8,19 +8,18 @@ import { ResetIcon } from "../../../icons";
 export default function ListLearnMore({
   // Data to List: learnMoreData
   learnMoreData,
-  
   // SEARCH -- Attributes
   searchQuery,
-  clearSearch,
   // SEARCH -- Methods
   handleQueryChange,
+  clearSearch,
+   // FILTERS -- Attributes
+   categoryFilter,
+   categories,
   // FILTERS -- Methods
   handleFilterChange,
   resetFilters,
   applyFilters,
-  // FILTERS -- Attributes
-  categoryFilter,
-  categories,
   // PAGINATION -- Attributes
   hasPages,
   pages,
@@ -28,12 +27,12 @@ export default function ListLearnMore({
   // PAGINATION -- Methods
   prevPage,
   nextPage,
-
   // BATCH SELECT -- Attributes
   selectedLearnMore,
   // BATCH SELECT -- Methods
-  handleSelected,
   batchSelect,
+  handleSelected,
+
   
 
 
@@ -45,7 +44,7 @@ export default function ListLearnMore({
       <DashHeader
         title="Learn More"
         action="Add New"
-        method={() => history.push("/learnmore/add")}
+        method={() => history.push("/learn_more/add")}
       />
       <div style={{ marginBottom: 10, display: "flex" }}>
         <p>
