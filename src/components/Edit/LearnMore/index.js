@@ -12,6 +12,8 @@ import Message from "../../Message";
 
 export default function EditLearnMore({
   learnMoreData,
+
+  categoriesChanged,
   learnMoreTitleChanged,
   customFieldsChanged,
 
@@ -25,15 +27,18 @@ export default function EditLearnMore({
   eImages,
   eAudios,
   eVideos,
+  eCategories,
 
   // QUERIES
   queryImages,
   queryAudios,
   queryVideos,
+  queryCategories
 
- 
+
 
 }){
+  console.log("AJP",eCategories)
   return(
     <div>
        <DashHeader
@@ -91,7 +96,18 @@ export default function EditLearnMore({
             selected={learnMoreData.videos}
             setter={(data) => videosChanged(data)}
           />
-        
+        </div>
+        <div className="col">
+          <TextPickerCtrl
+            label={"category"}
+            dataLabel={"category"}
+            data={eCategories}
+            query={queryCategories}
+            selected={learnMoreData.categories}
+            resource="learnMore"
+            setter={(data) => categoriesChanged(data)}
+          />
+         
         </div>
 
 
