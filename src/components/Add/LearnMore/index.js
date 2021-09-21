@@ -13,6 +13,7 @@ export default function AddLearnMore({
   // METHODS
   locationsChanged,
   imagesChanged,
+  audioFilesChanged,
 
   learnMoreNameChanged,
   customFieldsChanged,
@@ -21,10 +22,15 @@ export default function AddLearnMore({
   // SELECTION DATA
   eLocations,
   eImages,
+  eAudios,
 
   // QUERIES
   queryLocations,
   queryImages,
+  queryAudios,
+
+
+ 
 }){
 
   return (
@@ -39,7 +45,7 @@ export default function AddLearnMore({
       <div className="form__grid">
         <div className="col">
           <TextInputCtrl
-              label={"Learn More"}
+              label={"Learn More Title"}
               setter={(data) => learnMoreNameChanged(data)}
             />      
           <CustomFieldPickerCtrl
@@ -65,6 +71,13 @@ export default function AddLearnMore({
             data={eImages}
             query={queryImages}
             setter={(data) => imagesChanged(data)}
+          />
+           <MediaPickerCtrl
+            label={"Audio File"}
+            dataLabel={"audio_file"}
+            data={eAudios}
+            query={queryAudios}
+            setter={(data) => audioFilesChanged(data)}
           />
           
         </div>

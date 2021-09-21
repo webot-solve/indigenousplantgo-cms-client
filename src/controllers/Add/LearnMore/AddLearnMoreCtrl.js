@@ -4,6 +4,7 @@ import AddLearnMore from '../../../components/Add/LearnMore';
 import {
   getLocations,
   getImages,
+  getAudios,
  
 } from "../../../network";
 
@@ -19,6 +20,8 @@ export default function AddLearnMoreCtrl(){
 
   const [locations, setLocations] = useState([]);
   const [images, setImages] = useState([]);
+  const [audioFiles, setAudioFiles] = useState([]);
+
   const [customFields, setCustomFields] = useState([]);
   const [learnMore, setLearnMoreName] = useState("");
   const [description, setDescription] = useState("");
@@ -29,6 +32,8 @@ export default function AddLearnMoreCtrl(){
   // ===============================================================
   const [eLocations, setELocations] = useState([]);
   const [eImages, setEImages] = useState([]);
+  const [eAudios, setEAudios] = useState([]);
+  
 
 // ===============================================================
   // NETWORK QUERIES FOR EXISTING DATA
@@ -48,6 +53,12 @@ export default function AddLearnMoreCtrl(){
     setEImages(result);
   };
 
+  const queryAudios = async () => {
+    const result = await getAudios();
+    if (result.error) return;
+    if (!isMounted) return;
+    setEAudios(result);
+  };
    // ===============================================================
   // INPUT WATCHERS AND SETTERS
   // @desc functions that watch updates in children components, and sets them here.
@@ -58,6 +69,13 @@ export default function AddLearnMoreCtrl(){
     const mappedData = data.map((d) => d._id);
     setImages(mappedData);
   };
+  const audioFilesChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    setAudioFiles(mappedData);
+  };
+
+
+
   const learnMoreNameChanged = (data) => {
     setLearnMoreName(data);
   };
@@ -80,19 +98,26 @@ export default function AddLearnMoreCtrl(){
 
   return (
     <AddLearnMore
-
+      // WATCHERS
       locationsChanged={locationsChanged}
       imagesChanged={imagesChanged}
+      audioFilesChanged={audioFilesChanged}
 
       customFieldsChanged={customFieldsChanged}
       learnMoreNameChanged={learnMoreNameChanged}
       descriptionChanged={descriptionChanged}
-      
+
+      // SELECTION DATA
       eLocations={eLocations}
       eImages={eImages}
-      queryImages={queryImages}
-
+      eAudios={eAudios}
+      
+      // QUERIES
       queryLocations={queryLocations}
+      queryImages={queryImages}
+      queryAudios={queryAudios}
+
+      
     />
   );
 }
