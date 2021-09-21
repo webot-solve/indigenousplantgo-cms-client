@@ -6,6 +6,7 @@ export default function Table({
   learnMoreData,
   selectedLearnMore,
   handleSelected,
+  handleDelete,
 }) {
   return(
     <ul className="table__list">
@@ -47,6 +48,7 @@ export default function Table({
                 <button
                   type="button" 
                   value={learnMore._id}
+                  onClick={(e) => handleDelete(e)}
                 >
                   &nbsp;Delete
                 </button>
@@ -82,9 +84,8 @@ export default function Table({
                 </p>
               </div>
           </li>
-        ) 
-        })
-      }
+        ); 
+      })}
     </ul>
   );
 }

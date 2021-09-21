@@ -4,6 +4,9 @@ import Table from "./Table";
 import { useHistory } from "react-router-dom";
 import { Dropdown, Input, Icon} from "semantic-ui-react";
 import { ResetIcon } from "../../../icons";
+import Modal from "../../Modal";
+import { Loader } from "semantic-ui-react";
+
 
 export default function ListLearnMore({
   // Data to List: learnMoreData
@@ -32,13 +35,85 @@ export default function ListLearnMore({
   // BATCH SELECT -- Methods
   batchSelect,
   handleSelected,
+  // BULK ACTION -- Attributes
+  bulkAction,
+  // BULK ACTION -- Methods
+  handleBulkActionChange,
+  handleBulkDelete,
+  applyBulkDelete,
+  // MODAL -- Attributes
+  modalActive,
+  modalState,
+  // MODAL -- Methods
+  closeModal,
 
-  
-
-
-
+  // DELETE -- Attributes
+  pendingDelete,
+  // DELETE -- Methods
+  handleDelete,
+  applyDelete,
+  // LOADING -- Attributes
+  loading,
 }){
   const history = useHistory();
+  const renderModal = () => {
+    switch (modalState) {
+      case "single":
+        return (
+          <>
+            <p>
+              Deleting this plant will remove all instances of the plant&nbsp;
+              <strong style={{ color: "var(--danger)" }}>
+                {pendingDelete.learn_more_title}
+              </strong>
+              . Do you wish to proceed?
+            </p>
+            <button onClick={() => applyDelete()} className="field__button">
+              Yes, I know what I am doing.
+            </button>
+            <button
+              onClick={() => closeModal()}
+              className="field__button secondary"
+            >
+              No, cancel my request.
+            </button>
+          </>
+        );
+      case "bulk":
+        return (
+          <>
+            <p>
+              Deleting&nbsp;
+              <strong style={{ color: "var(--danger)" }}>
+                {selectedLearnMore.length}
+              </strong>
+              &nbsp;learn more will remove{" "}
+              <strong
+                style={{
+                  color: "var(--danger)",
+                  fontWeight: "700",
+                  textTransform: "uppercase",
+                }}
+              >
+                all
+              </strong>{" "}
+              instances of the deleted plants. Do you wish to proceed?
+            </p>
+            <button onClick={() => applyBulkDelete()} className="field__button">
+              Yes, I know what I am doing.
+            </button>
+            <button
+              onClick={() => closeModal()}
+              className="field__button secondary"
+            >
+              No, cancel my request.
+            </button>
+          </>
+        );
+      default:
+        return <></>;
+    }
+  };
   return (
     <div>
       <DashHeader
@@ -51,20 +126,22 @@ export default function ListLearnMore({
           <strong>Results</strong> ({learnMoreData.length}){" "}
         </p>
       </div>
-
+      {loading && <Loader active inline size="tiny" />}
       <div className="table__controls">
         <div style={{ display: "flex" }}>
           {/* BULK ACTION */}
           <div className="table__action">
             <Dropdown 
               placeholder={"Bulk Actions"}
+              onChange={(e, data) => handleBulkActionChange(e, data)}
+              value={bulkAction}
               selection
               options={[
                 { key: "default", value: "default", text: "Bulk Actions" },
                 { key: "delete", value: "delete", text: "Delete" },
               ]}
               />
-            <button>Apply</button>
+            <button onClick={() => handleBulkDelete()}>Apply</button>
           </div>
           {/* FILTER ACTION BY CATEGORIES */}
           <div className="table__action">
@@ -141,7 +218,7 @@ export default function ListLearnMore({
           learnMoreData={ hasPages ? pages[page-1] : learnMoreData}
           handleSelected={handleSelected}
           selectedLearnMore={selectedLearnMore}
-          
+          handleDelete={handleDelete}
         />
       </form>
       {/* PAGINATION */}
@@ -163,8 +240,18 @@ export default function ListLearnMore({
           </div>
         </div>
       )}
-
-
+       <Modal
+        isActive={modalActive}
+        title={
+          modalState === "single"
+            ? `Delete ${pendingDelete.learn_more_title}?`
+            : `Delete all ${selectedLearnMore.length} plants?`
+        }
+        subtitle={modalState === "single" ? null : `Bulk Delete`}
+        closeModal={closeModal}
+      >
+        {renderModal()}
+      </Modal>
     </div>
   )
 }

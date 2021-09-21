@@ -3,6 +3,8 @@ import ListLearnMore from "../../../components/List/LearnMore/index";
 import {
   getAllLearnMore,
   getCategoryGroup,
+  deleteLearnMore,
+  bulkDeleteLearnMore
 } from "../../../network"
 
 export default function ListLearnMoreCtrl(){
@@ -20,6 +22,11 @@ export default function ListLearnMoreCtrl(){
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(1);
   const [eCategories, setECategories] = useState([]);
+
+  const [modalActive, setModalActive] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState({});
+  const [modalState, setModalState] = useState("single");
+  const [bulkAction, setBulkAction] = useState("");
   
   const [loading, setLoading] = useState(false);
  
@@ -209,17 +216,55 @@ export default function ListLearnMoreCtrl(){
     setPage(currentPage);
   };
 
-  
+  //=================== DELETE
 
-  
+  const handleDelete = async (e) => {
+    if (!isMounted) return;
+    setModalState("single");
+    const id = e.target.value;
+    const foundLearnMore = learnMoreData.filter((learnMore) => learnMore._id === id)[0];
+    if (!foundLearnMore) return;
+    await setPendingDelete(foundLearnMore);
+    setModalActive(true);
+  };
 
+  const applyDelete = async () => {
+    if (!isMounted) return;
+    const id = pendingDelete._id;
+    if (!id) return;
+    const result = await deleteLearnMore(id);
+    if (result.error) return;
+    if (!isMounted) return;
+    closeModal();
+    setPendingDelete({});
+    queryLearnMore();
+  };
 
-  
-  
+  const closeModal = () => {
+    setModalActive(false);
+  };
 
- 
+  const handleBulkActionChange = (_, data) => {
+    const value = data.value;
+    setBulkAction(value);
+  };
 
+  const handleBulkDelete = () => {
+    if (selectedLearnMore.length < 1) return;
+    if (bulkAction === "default") return;
+    setModalState("bulk");
+    setModalActive(true);
+  };
 
+  const applyBulkDelete = async () => {
+    if (!isMounted) return;
+    const result = await bulkDeleteLearnMore(selectedLearnMore);
+    if (result.error) return;
+    if (!isMounted) return;
+    closeModal();
+    setSelectedLearnMore([]);
+    queryLearnMore();
+  };
 
   return(
     <ListLearnMore
@@ -247,6 +292,19 @@ export default function ListLearnMoreCtrl(){
       selectedLearnMore={selectedLearnMore}
       handleSelected={handleSelected}
       batchSelect={batchSelect}
+
+      handleDelete={handleDelete}
+      modalState={modalState}
+      modalActive={modalActive}
+      pendingDelete={pendingDelete}
+
+      bulkAction={bulkAction}
+      applyDelete={applyDelete}
+      handleBulkActionChange={handleBulkActionChange}
+      handleBulkDelete={handleBulkDelete}
+      applyBulkDelete={applyBulkDelete}
+
+      closeModal={closeModal}
 
     />
   );
