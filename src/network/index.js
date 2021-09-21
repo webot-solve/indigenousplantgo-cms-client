@@ -1262,3 +1262,28 @@ export const bulkDeleteLearnMore = async (array) => {
     };
   }
 };
+
+export const createLearnMore = async (learnMore) => {
+  const token = getToken();
+
+  if (!token)
+    return {
+      error: "No token found. Could not authenticate request.",
+    };
+
+  try {
+    const response = await axios.post(`${BASE_URL}/learn_more`, learnMore, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error.response);
+    return {
+      error: error.response,
+    };
+  }
+};

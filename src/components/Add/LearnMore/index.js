@@ -11,7 +11,9 @@ import Message from "../../Message";
 
 export default function AddLearnMore({
   // METHODS
-  locationsChanged,
+  handlePublish,
+
+  // locationsChanged,
   imagesChanged,
   audioFilesChanged,
   videosChanged,
@@ -24,7 +26,7 @@ export default function AddLearnMore({
   isVisibleChanged,
 
   // SELECTION DATA
-  eLocations,
+  // eLocations,
   eImages,
   eAudios,
   eVideos,
@@ -32,23 +34,35 @@ export default function AddLearnMore({
   eTags,
 
   // QUERIES
-  queryLocations,
+  // queryLocations,
   queryImages,
   queryAudios,
   queryVideos,
   queryCategories,
   queryTags,
 
+  // Preloader
+  loading,
+  directive,
   
 }){
 
   return (
     <div>
+       {typeof directive === "object" &&
+        directive !== null &&
+        Object.keys(directive).length > 0 && (
+          <Message
+            success={directive.success}
+            header={directive.header}
+            message={directive.message}
+          />
+        )}
       <DashHeader
         title="Add New Learn More"
         action="Publish"
-        // method={handlePublish}
-        // loading={loading}
+        method={handlePublish}
+        loading={loading}
       />
       <br></br>
       <div className="form__grid">
@@ -65,13 +79,13 @@ export default function AddLearnMore({
             label={"Description"}
             setter={(data) => descriptionChanged(data)}
           />
-          <TextPickerCtrl
+          {/* <TextPickerCtrl
             label={"location"}
             dataLabel={"location"}
             data={eLocations}
             query={queryLocations}
             setter={(data) => locationsChanged(data)}
-          />
+          /> */}
         </div>
         <div className="col">
           <MediaPickerCtrl
