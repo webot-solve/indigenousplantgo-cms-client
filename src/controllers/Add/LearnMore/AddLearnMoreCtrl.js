@@ -7,6 +7,7 @@ import {
   getAudios,
   getVideos,
   getCategoryGroup,
+  getTags,
  
 } from "../../../network";
 
@@ -20,6 +21,7 @@ export default function AddLearnMoreCtrl(){
   // @desc form control data
   // ===============================================================
 
+  const [tags, setTags] = useState([]);
   const [categories, setCategories] = useState([]);
   const [locations, setLocations] = useState([]);
   const [images, setImages] = useState([]);
@@ -39,6 +41,7 @@ export default function AddLearnMoreCtrl(){
   const [eAudios, setEAudios] = useState([]);
   const [eVideos, setEVideos] = useState([]);
   const [eCategories, setECategories] = useState([]);
+  const [eTags, setETags] = useState([]);
   
 
 // ===============================================================
@@ -76,6 +79,13 @@ export default function AddLearnMoreCtrl(){
     if (!isMounted) return;
     setECategories(result);
   };
+
+  const queryTags = async () => {
+    const result = await getTags();
+    if (result.error) return;
+    if (!isMounted) return;
+    setETags(result);
+  };
    // ===============================================================
   // INPUT WATCHERS AND SETTERS
   // @desc functions that watch updates in children components, and sets them here.
@@ -83,6 +93,16 @@ export default function AddLearnMoreCtrl(){
   const categoriesChanged = (data) => {
     const mappedData = data.map((d) => d._id);
     setCategories(mappedData);
+  };
+
+  const tagsChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    setTags(mappedData);
+  };
+
+  const locationsChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    setLocations(mappedData);
   };
 
   const imagesChanged = (data) => {
@@ -110,10 +130,7 @@ export default function AddLearnMoreCtrl(){
     setCustomFields(data);
   };
 
-  const locationsChanged = (data) => {
-    const mappedData = data.map((d) => d._id);
-    setLocations(mappedData);
-  };
+ 
 
   return (
     <AddLearnMore
@@ -123,6 +140,7 @@ export default function AddLearnMoreCtrl(){
       audioFilesChanged={audioFilesChanged}
       videosChanged={videosChanged}
       categoriesChanged={categoriesChanged}
+      tagsChanged={tagsChanged}
 
       customFieldsChanged={customFieldsChanged}
       learnMoreNameChanged={learnMoreNameChanged}
@@ -134,6 +152,7 @@ export default function AddLearnMoreCtrl(){
       eAudios={eAudios}
       eVideos={eVideos}
       eCategories={eCategories}
+      eTags={eTags}
       
       // QUERIES
       queryLocations={queryLocations}
@@ -141,6 +160,7 @@ export default function AddLearnMoreCtrl(){
       queryAudios={queryAudios}
       queryVideos={queryVideos}
       queryCategories={queryCategories}
+      queryTags={queryTags}
 
       
       

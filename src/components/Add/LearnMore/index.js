@@ -20,6 +20,7 @@ export default function AddLearnMore({
   customFieldsChanged,
   descriptionChanged,
   categoriesChanged,
+  tagsChanged,
 
   // SELECTION DATA
   eLocations,
@@ -27,6 +28,7 @@ export default function AddLearnMore({
   eAudios,
   eVideos,
   eCategories,
+  eTags,
 
   // QUERIES
   queryLocations,
@@ -34,7 +36,7 @@ export default function AddLearnMore({
   queryAudios,
   queryVideos,
   queryCategories,
-
+  queryTags,
 
   
 }){
@@ -101,6 +103,13 @@ export default function AddLearnMore({
             query={queryCategories}
             resource="learnMore"
             setter={(data) => categoriesChanged(data)}
+          />
+           <TextPickerCtrl
+            label={"tag"}
+            dataLabel={"tag"}
+            data={eTags}
+            query={queryTags}
+            setter={(data) => tagsChanged(data)}
           />
         </div>
 
