@@ -14,6 +14,7 @@ export default function AddLearnMore({
   locationsChanged,
   imagesChanged,
   audioFilesChanged,
+  videosChanged,
 
   learnMoreNameChanged,
   customFieldsChanged,
@@ -23,11 +24,13 @@ export default function AddLearnMore({
   eLocations,
   eImages,
   eAudios,
+  eVideos,
 
   // QUERIES
   queryLocations,
   queryImages,
   queryAudios,
+  queryVideos,
 
 
  
@@ -78,6 +81,14 @@ export default function AddLearnMore({
             data={eAudios}
             query={queryAudios}
             setter={(data) => audioFilesChanged(data)}
+          />
+
+          <MediaPickerCtrl
+            label={"video"}
+            dataLabel={"video"}
+            data={eVideos}
+            query={queryVideos}
+            setter={(data) => videosChanged(data)}
           />
           
         </div>

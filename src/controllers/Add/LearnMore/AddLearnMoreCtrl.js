@@ -5,6 +5,7 @@ import {
   getLocations,
   getImages,
   getAudios,
+  getVideos,
  
 } from "../../../network";
 
@@ -21,6 +22,7 @@ export default function AddLearnMoreCtrl(){
   const [locations, setLocations] = useState([]);
   const [images, setImages] = useState([]);
   const [audioFiles, setAudioFiles] = useState([]);
+  const [videos, setVideos] = useState([]);
 
   const [customFields, setCustomFields] = useState([]);
   const [learnMore, setLearnMoreName] = useState("");
@@ -33,6 +35,7 @@ export default function AddLearnMoreCtrl(){
   const [eLocations, setELocations] = useState([]);
   const [eImages, setEImages] = useState([]);
   const [eAudios, setEAudios] = useState([]);
+  const [eVideos, setEVideos] = useState([]);
   
 
 // ===============================================================
@@ -45,19 +48,23 @@ export default function AddLearnMoreCtrl(){
     if (!isMounted) return;
     setELocations(result);
   };
-
   const queryImages = async () => {
     const result = await getImages();
     if (result.error) return;
     if (!isMounted) return;
     setEImages(result);
   };
-
   const queryAudios = async () => {
     const result = await getAudios();
     if (result.error) return;
     if (!isMounted) return;
     setEAudios(result);
+  };
+  const queryVideos = async () => {
+    const result = await getVideos();
+    if (result.error) return;
+    if (!isMounted) return;
+    setEVideos(result);
   };
    // ===============================================================
   // INPUT WATCHERS AND SETTERS
@@ -73,6 +80,10 @@ export default function AddLearnMoreCtrl(){
     const mappedData = data.map((d) => d._id);
     setAudioFiles(mappedData);
   };
+  const videosChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    setVideos(mappedData);
+  };
 
 
 
@@ -86,11 +97,6 @@ export default function AddLearnMoreCtrl(){
     setCustomFields(data);
   };
 
-    // ===============================================================
-  // INPUT WATCHERS AND SETTERS
-  // @desc functions that watch updates in children components, and sets them here.
-  // ===============================================================
-
   const locationsChanged = (data) => {
     const mappedData = data.map((d) => d._id);
     setLocations(mappedData);
@@ -102,6 +108,7 @@ export default function AddLearnMoreCtrl(){
       locationsChanged={locationsChanged}
       imagesChanged={imagesChanged}
       audioFilesChanged={audioFilesChanged}
+      videosChanged={videosChanged}
 
       customFieldsChanged={customFieldsChanged}
       learnMoreNameChanged={learnMoreNameChanged}
@@ -111,11 +118,13 @@ export default function AddLearnMoreCtrl(){
       eLocations={eLocations}
       eImages={eImages}
       eAudios={eAudios}
+      eVideos={eVideos}
       
       // QUERIES
       queryLocations={queryLocations}
       queryImages={queryImages}
       queryAudios={queryAudios}
+      queryVideos={queryVideos}
 
       
     />
