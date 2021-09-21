@@ -19,21 +19,24 @@ export default function AddLearnMore({
   learnMoreNameChanged,
   customFieldsChanged,
   descriptionChanged,
+  categoriesChanged,
 
   // SELECTION DATA
   eLocations,
   eImages,
   eAudios,
   eVideos,
+  eCategories,
 
   // QUERIES
   queryLocations,
   queryImages,
   queryAudios,
   queryVideos,
+  queryCategories,
 
 
- 
+  
 }){
 
   return (
@@ -82,7 +85,6 @@ export default function AddLearnMore({
             query={queryAudios}
             setter={(data) => audioFilesChanged(data)}
           />
-
           <MediaPickerCtrl
             label={"video"}
             dataLabel={"video"}
@@ -90,7 +92,16 @@ export default function AddLearnMore({
             query={queryVideos}
             setter={(data) => videosChanged(data)}
           />
-          
+        </div>
+        <div className="col">
+          <TextPickerCtrl
+            label={"category"}
+            dataLabel={"category"}
+            data={eCategories}
+            query={queryCategories}
+            resource="learnMore"
+            setter={(data) => categoriesChanged(data)}
+          />
         </div>
 
 

@@ -6,6 +6,7 @@ import {
   getImages,
   getAudios,
   getVideos,
+  getCategoryGroup,
  
 } from "../../../network";
 
@@ -19,6 +20,7 @@ export default function AddLearnMoreCtrl(){
   // @desc form control data
   // ===============================================================
 
+  const [categories, setCategories] = useState([]);
   const [locations, setLocations] = useState([]);
   const [images, setImages] = useState([]);
   const [audioFiles, setAudioFiles] = useState([]);
@@ -36,6 +38,7 @@ export default function AddLearnMoreCtrl(){
   const [eImages, setEImages] = useState([]);
   const [eAudios, setEAudios] = useState([]);
   const [eVideos, setEVideos] = useState([]);
+  const [eCategories, setECategories] = useState([]);
   
 
 // ===============================================================
@@ -66,11 +69,21 @@ export default function AddLearnMoreCtrl(){
     if (!isMounted) return;
     setEVideos(result);
   };
+
+  const queryCategories = async () => {
+    const result = await getCategoryGroup("plant");
+    if (result.error) return;
+    if (!isMounted) return;
+    setECategories(result);
+  };
    // ===============================================================
   // INPUT WATCHERS AND SETTERS
   // @desc functions that watch updates in children components, and sets them here.
   // ===============================================================
-
+  const categoriesChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    setCategories(mappedData);
+  };
 
   const imagesChanged = (data) => {
     const mappedData = data.map((d) => d._id);
@@ -109,6 +122,7 @@ export default function AddLearnMoreCtrl(){
       imagesChanged={imagesChanged}
       audioFilesChanged={audioFilesChanged}
       videosChanged={videosChanged}
+      categoriesChanged={categoriesChanged}
 
       customFieldsChanged={customFieldsChanged}
       learnMoreNameChanged={learnMoreNameChanged}
@@ -119,13 +133,16 @@ export default function AddLearnMoreCtrl(){
       eImages={eImages}
       eAudios={eAudios}
       eVideos={eVideos}
+      eCategories={eCategories}
       
       // QUERIES
       queryLocations={queryLocations}
       queryImages={queryImages}
       queryAudios={queryAudios}
       queryVideos={queryVideos}
+      queryCategories={queryCategories}
 
+      
       
     />
   );
