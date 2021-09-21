@@ -3,6 +3,7 @@ import EditLearnMore from "../../../components/Edit/LearnMore";
 import { 
   getLearnMore,
   getImages, 
+  getAudios,
 
 } from "../../../network";
 import { useParams } from "react-router-dom";
@@ -21,6 +22,9 @@ export default function EditLearnMoreCtrl(){
   // ===============================================================
 
   const [images, setImages] = useState([]);
+  const [audioFiles, setAudioFiles] = useState([]);
+
+
   const [learnMoreTitle, setLearnMoreTitle] = useState("");
   const [description, setDescription] = useState("");
   const [customFields, setCustomFields] = useState([]);
@@ -31,6 +35,7 @@ export default function EditLearnMoreCtrl(){
   // @desc data that appears as options in select boxes.
   // ===============================================================
   const [eImages, setEImages] = useState([]);
+  const [eAudios, setEAudios] = useState([]);
 
    // Error handling
    const [directive, setDirective] = useState(null);
@@ -75,6 +80,14 @@ export default function EditLearnMoreCtrl(){
     setEImages(result);
   };
 
+  const queryAudios = async () => {
+    const result = await getAudios();
+    if (result.error) return;
+    if (!isMounted) return;
+    setEAudios(result);
+  };
+
+
   // ===============================================================
   // INPUT WATCHERS AND SETTERS
   // @desc functions that watch updates in children components, and sets them here.
@@ -97,6 +110,11 @@ export default function EditLearnMoreCtrl(){
     if (!isMounted) return;
     setImages(mappedData);
   };
+  const audioFilesChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    if (!isMounted) return;
+    setAudioFiles(mappedData);
+  };
 
   return (
     <EditLearnMore
@@ -106,14 +124,18 @@ export default function EditLearnMoreCtrl(){
       learnMoreTitleChanged ={learnMoreTitleChanged}
       descriptionChanged={descriptionChanged}
       customFieldsChanged={customFieldsChanged}
+
       imagesChanged={imagesChanged}
+      audioFilesChanged={audioFilesChanged}
 
       // SELECTION DATA
       eImages={eImages}
+      eAudios={eAudios}
 
       // QUERIES
       queryLearnMore={queryLearnMore}
       queryImages={queryImages}
+      queryAudios={queryAudios}
 
       loading={loading}
       directive={directive}
