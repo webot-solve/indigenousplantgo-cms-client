@@ -17,6 +17,12 @@ import AllWaypoints from "../pages/waypoints/AllWaypoints";
 import AddWaypoint from "../pages/waypoints/AddWaypoint";
 import EditWaypoint from "../pages/waypoints/EditWaypoint";
 import WaypointCategories from "../pages/waypoints/WaypointCategories";
+
+// 11.0 LEARN MORE
+import AllLearnMore from '../pages/learnmore/AllLearnMore';
+import AddLearnMore from '../pages/learnmore/AddLearnMore';
+import EditLearnMore from "../pages/learnmore/EditLearnMore";
+
 // 4.0 USERS
 import AllUsers from "../pages/users/AllUsers";
 import AddUser from "../pages/users/AddUser";
@@ -36,9 +42,7 @@ import Login from "../pages/login";
 // 10.0 RECOVERY
 import ResetPassword from "../pages/resetpassword";
 
-// 11.0 LEARN MORE
-import AllLearnMore from '../pages/learnmore/AllLearnMore';
-import AddLearnMore from '../pages/learnmore/AddLearnMore'
+
 
 // Routes that should only be visible if authenticated.
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -116,6 +120,11 @@ export default function Navigation() {
         {/* LEARN MORE */}
         <PrivateRoute exact path="/learnmore" component={AllLearnMore}/>
         <PrivateRoute exact path="/learnmore/add" component={AddLearnMore} />
+        <PrivateRoute
+          exact
+          path="/learnmore/edit/:learnMoreId"
+          component={EditLearnMore}
+        />
 
 
 
