@@ -3,34 +3,27 @@ import AddLearnMore from '../../../components/Add/LearnMore';
 import { useHistory } from "react-router-dom";
 
 import {
-  // getLocations,
   getImages,
   getAudios,
   getVideos,
   getCategoryGroup,
   getTags,
   createLearnMore
- 
 } from "../../../network";
-
 
 export default function AddLearnMoreCtrl(){
 
   let isMounted = true;
   const history = useHistory();
-
   // ===============================================================
   // FORM DATA
   // @desc form control data
   // ===============================================================
-
   const [tags, setTags] = useState([]);
   const [categories, setCategories] = useState([]);
-  // const [locations, setLocations] = useState([]);
   const [images, setImages] = useState([]);
   const [audioFiles, setAudioFiles] = useState([]);
   const [videos, setVideos] = useState([]);
-
   const [customFields, setCustomFields] = useState([]);
   const [learnMoreName, setLearnMoreName] = useState("");
   const [description, setDescription] = useState("");
@@ -40,7 +33,6 @@ export default function AddLearnMoreCtrl(){
   // SELECTION DATA
   // @desc data that appears as options in select boxes.
   // ===============================================================
-  // const [eLocations, setELocations] = useState([]);
   const [eImages, setEImages] = useState([]);
   const [eAudios, setEAudios] = useState([]);
   const [eVideos, setEVideos] = useState([]);
@@ -51,18 +43,46 @@ export default function AddLearnMoreCtrl(){
   const [directive, setDirective] = useState(null);
   // Preloader
   const [loading, setLoading] = useState(false);
-  
 
+  //========================USEEFFECT
+  useEffect(() => {
+    if (isMounted) resetDirective();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [directive]);
+
+  const resetDirective = () => {
+    (async () => {
+      await setTimeout(() => {
+        if (!isMounted) return;
+        setDirective(null);
+      }, 4000);
+    })();
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    isMounted = true;
+    if (isMounted) {
+      (async () => {
+        setLoading(true);
+        await queryImages();
+        await queryAudios();
+        await queryVideos();
+        await queryTags();
+        await queryCategories();
+        setLoading(false);
+      })();
+    }
+    return () => {
+      isMounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
 // ===============================================================
   // NETWORK QUERIES FOR EXISTING DATA
   // @desc queries for existing data
   // ===============================================================
-  // const queryLocations = async () => {
-  //   const result = await getLocations();
-  //   if (result.error) return;
-  //   if (!isMounted) return;
-  //   setELocations(result);
-  // };
   const queryImages = async () => {
     const result = await getImages();
     if (result.error) return;
@@ -83,7 +103,7 @@ export default function AddLearnMoreCtrl(){
   };
 
   const queryCategories = async () => {
-    const result = await getCategoryGroup("plant");
+    const result = await getCategoryGroup("learnMore");
     if (result.error) return;
     if (!isMounted) return;
     setECategories(result);
@@ -109,11 +129,6 @@ export default function AddLearnMoreCtrl(){
     setTags(mappedData);
   };
 
-  // const locationsChanged = (data) => {
-  //   const mappedData = data.map((d) => d._id);
-  //   setLocations(mappedData);
-  // };
-
   const imagesChanged = (data) => {
     const mappedData = data.map((d) => d._id);
     setImages(mappedData);
@@ -126,8 +141,6 @@ export default function AddLearnMoreCtrl(){
     const mappedData = data.map((d) => d._id);
     setVideos(mappedData);
   };
-
-
 
   const learnMoreNameChanged = (data) => {
     setLearnMoreName(data);
@@ -168,28 +181,24 @@ export default function AddLearnMoreCtrl(){
         message: result.error.data.error,
         success: false,
       });
-    history.push("/plants");
+    history.push("/learnmore");
   };
 
   return (
     <AddLearnMore
       // WATCHERS
-      // locationsChanged={locationsChanged}
       imagesChanged={imagesChanged}
       audioFilesChanged={audioFilesChanged}
       videosChanged={videosChanged}
       categoriesChanged={categoriesChanged}
       tagsChanged={tagsChanged}
-
       customFieldsChanged={customFieldsChanged}
       learnMoreNameChanged={learnMoreNameChanged}
       descriptionChanged={descriptionChanged}
       isVisibleChanged={isVisibleChanged}
-
       handlePublish={handlePublish}
 
       // SELECTION DATA
-      // eLocations={eLocations}
       eImages={eImages}
       eAudios={eAudios}
       eVideos={eVideos}
@@ -207,7 +216,6 @@ export default function AddLearnMoreCtrl(){
        // PRELOADER
        loading={loading}
        directive={directive}
-      
     />
   );
 }

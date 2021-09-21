@@ -1,5 +1,4 @@
 import React from 'react'
-
 import DashHeader from "../../DashHeader";
 import TextPickerCtrl from "../../../controllers/Forms/TextPicker/TextPickerCtrl";
 import MediaPickerCtrl from "../../../controllers/Forms/MediaPicker/MediaPickerCtrl";
@@ -12,12 +11,9 @@ import Message from "../../Message";
 export default function AddLearnMore({
   // METHODS
   handlePublish,
-
-  // locationsChanged,
   imagesChanged,
   audioFilesChanged,
   videosChanged,
-
   learnMoreNameChanged,
   customFieldsChanged,
   descriptionChanged,
@@ -26,7 +22,6 @@ export default function AddLearnMore({
   isVisibleChanged,
 
   // SELECTION DATA
-  // eLocations,
   eImages,
   eAudios,
   eVideos,
@@ -34,7 +29,6 @@ export default function AddLearnMore({
   eTags,
 
   // QUERIES
-  // queryLocations,
   queryImages,
   queryAudios,
   queryVideos,
@@ -44,7 +38,6 @@ export default function AddLearnMore({
   // Preloader
   loading,
   directive,
-  
 }){
 
   return (
@@ -79,13 +72,6 @@ export default function AddLearnMore({
             label={"Description"}
             setter={(data) => descriptionChanged(data)}
           />
-          {/* <TextPickerCtrl
-            label={"location"}
-            dataLabel={"location"}
-            data={eLocations}
-            query={queryLocations}
-            setter={(data) => locationsChanged(data)}
-          /> */}
         </div>
         <div className="col">
           <MediaPickerCtrl
@@ -132,11 +118,7 @@ export default function AddLearnMore({
             setter={(data) => isVisibleChanged(data)}
           />
         </div>
-
-
       </div>
-      
-
     </div>
-  )
+  );
 }
