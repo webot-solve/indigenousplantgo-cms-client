@@ -3,7 +3,10 @@ import { parseDate } from "../../../../utility";
 import { Link } from "react-router-dom";
 
 export default function Table({
-  learnMoreData
+  learnMoreData,
+  selectedLearnMore,
+  handleSelected,
+  handleDelete,
 }) {
   return(
     <ul className="table__list">
@@ -16,11 +19,21 @@ export default function Table({
           };
 
         return(
-          <li className={"table__row"}  key={index}>
+          <li 
+            className={
+              selectedLearnMore.includes(learnMore._id)
+                ? "table__row selected"
+                : "table__row"
+            }  
+            key={index}
+          >
             <div className="table__col select">
               <input 
                 type="checkbox"
-                value={learnMore._id}/>
+                value={learnMore._id}
+                checked={selectedLearnMore.includes(learnMore._id) ? true : false}
+                onChange={ e => handleSelected(e)}
+              />
             </div>
             <div className="table__col title">
               <p>{learnMore.learn_more_title}</p>
@@ -35,6 +48,7 @@ export default function Table({
                 <button
                   type="button" 
                   value={learnMore._id}
+                  onClick={(e) => handleDelete(e)}
                 >
                   &nbsp;Delete
                 </button>
@@ -70,9 +84,8 @@ export default function Table({
                 </p>
               </div>
           </li>
-        ) 
-        })
-      }
+        ); 
+      })}
     </ul>
   );
 }

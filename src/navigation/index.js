@@ -111,7 +111,7 @@ export default function Navigation() {
           component={WaypointCategories}
         />
 
-        <PrivateRoute exact path="/learnmore" component={AllLearnMore}/>
+        <PrivateRoute exact path="/learn_more" component={AllLearnMore}/>
 
         {/* 6.0 USERS */}
         <PrivateRoute exact path="/users" component={AllUsers} />
