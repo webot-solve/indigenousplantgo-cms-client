@@ -36,7 +36,9 @@ import Login from "../pages/login";
 // 10.0 RECOVERY
 import ResetPassword from "../pages/resetpassword";
 
-import AllLearnMore from '../pages/learnmore/AllLearnMore'
+// 11.0 LEARN MORE
+import AllLearnMore from '../pages/learnmore/AllLearnMore';
+import AddLearnMore from '../pages/learnmore/AddLearnMore'
 
 // Routes that should only be visible if authenticated.
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -111,7 +113,11 @@ export default function Navigation() {
           component={WaypointCategories}
         />
 
+        {/* LEARN MORE */}
         <PrivateRoute exact path="/learn_more" component={AllLearnMore}/>
+        <PrivateRoute exact path="/learn_more/add" component={AddLearnMore} />
+
+
 
         {/* 6.0 USERS */}
         <PrivateRoute exact path="/users" component={AllUsers} />
