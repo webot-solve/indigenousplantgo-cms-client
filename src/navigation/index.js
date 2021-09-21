@@ -114,8 +114,8 @@ export default function Navigation() {
         />
 
         {/* LEARN MORE */}
-        <PrivateRoute exact path="/learn_more" component={AllLearnMore}/>
-        <PrivateRoute exact path="/learn_more/add" component={AddLearnMore} />
+        <PrivateRoute exact path="/learnmore" component={AllLearnMore}/>
+        <PrivateRoute exact path="/learnmore/add" component={AddLearnMore} />
 
 
 
