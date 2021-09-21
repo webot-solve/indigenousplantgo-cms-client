@@ -21,6 +21,7 @@ export default function AddLearnMore({
   descriptionChanged,
   categoriesChanged,
   tagsChanged,
+  isVisibleChanged,
 
   // SELECTION DATA
   eLocations,
@@ -104,12 +105,17 @@ export default function AddLearnMore({
             resource="learnMore"
             setter={(data) => categoriesChanged(data)}
           />
-           <TextPickerCtrl
+          <TextPickerCtrl
             label={"tag"}
             dataLabel={"tag"}
             data={eTags}
             query={queryTags}
             setter={(data) => tagsChanged(data)}
+          />
+            <TogglerCtrl
+            label={"visibility"}
+            eValue={true}
+            setter={(data) => isVisibleChanged(data)}
           />
         </div>
 

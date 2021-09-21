@@ -31,6 +31,7 @@ export default function AddLearnMoreCtrl(){
   const [customFields, setCustomFields] = useState([]);
   const [learnMore, setLearnMoreName] = useState("");
   const [description, setDescription] = useState("");
+  const [isVisible, setIsVisible] = useState(true);
 
     // ===============================================================
   // SELECTION DATA
@@ -130,6 +131,10 @@ export default function AddLearnMoreCtrl(){
     setCustomFields(data);
   };
 
+  const isVisibleChanged = (data) => {
+    setIsVisible(data);
+  };
+
  
 
   return (
@@ -145,6 +150,7 @@ export default function AddLearnMoreCtrl(){
       customFieldsChanged={customFieldsChanged}
       learnMoreNameChanged={learnMoreNameChanged}
       descriptionChanged={descriptionChanged}
+      isVisibleChanged={isVisibleChanged}
 
       // SELECTION DATA
       eLocations={eLocations}
