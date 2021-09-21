@@ -13,6 +13,7 @@ import Message from "../../Message";
 export default function EditLearnMore({
   learnMoreData,
   learnMoreTitleChanged,
+  customFieldsChanged,
 
   descriptionChanged,
 
@@ -39,10 +40,15 @@ export default function EditLearnMore({
               eValue={learnMoreData.learn_more_title}
               setter={(data) => learnMoreTitleChanged(data)}
             />
-             <TextAreaCtrl
+            <TextAreaCtrl
             label={"Description"}
             eValue={learnMoreData.description}
             setter={(data) => descriptionChanged(data)}
+            />
+            <CustomFieldPickerCtrl
+            label={"Custom Field"}
+            selected={learnMoreData.custom_fields}
+            setter={(data) => customFieldsChanged(data)}
           />
           
           </div>

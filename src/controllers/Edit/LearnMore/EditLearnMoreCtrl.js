@@ -18,6 +18,7 @@ export default function EditLearnMoreCtrl(){
 
   const [learnMoreTitle, setLearnMoreTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [customFields, setCustomFields] = useState([]);
 
    // Error handling
    const [directive, setDirective] = useState(null);
@@ -54,10 +55,13 @@ export default function EditLearnMoreCtrl(){
     if (!isMounted) return;
     setLearnMoreTitle(data);
   };
-
   const descriptionChanged = (data) => {
     if (!isMounted) return;
     setDescription(data);
+  };
+  const customFieldsChanged = (data) => {
+    if (!isMounted) return;
+    setCustomFields(data);
   };
 
   return (
@@ -65,6 +69,7 @@ export default function EditLearnMoreCtrl(){
       // METHODS
       learnMoreTitleChanged ={learnMoreTitleChanged}
       descriptionChanged={descriptionChanged}
+      customFieldsChanged={customFieldsChanged}
 
       // SELECTION DATA
       learnMoreData = {learnMoreData}
