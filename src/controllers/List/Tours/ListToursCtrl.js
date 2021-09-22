@@ -30,12 +30,13 @@ export default function ListToursCtrl(){
   const [loading, setLoading] = useState(false);
 
  
-
+  //================ useEFFECT START===========================
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     isMounted = true;
     queryTours();
     queryCategories();
+    formatPages();
     
     return () => {
       isMounted = false;
@@ -57,7 +58,16 @@ export default function ListToursCtrl(){
     formatCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eCategories]);
-  // ================== METHODS ========================  
+
+  useEffect(() => {
+    setPage(1);
+    formatPages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [toursData_]);
+
+  //================ useEFFECT END============================
+
+  //================ METHODS START ===========================  
   const queryTours = async () => {
     if (!isMounted) return;
     setLoading(true);
@@ -75,6 +85,30 @@ export default function ListToursCtrl(){
     if (!isMounted) return;
     setECategories(result);
   };
+
+  const formatPages = () => {
+    const dataLength = toursData_.length;
+    if (dataLength < 5) return setHasPages(false);
+
+    setHasPages(true);
+    let itemsChunk = 5,
+        learnMoreData = toursData_;
+
+    // split the data into pages
+    const pages = learnMoreData.reduce((resultArray, item, index) => {
+      const chunkIndex = Math.floor(index / itemsChunk);
+      if (!resultArray[chunkIndex]) {
+        resultArray[chunkIndex] = []; // start a new chunk
+      }
+
+      resultArray[chunkIndex].push(item);
+      return resultArray;
+    }, []);
+
+    setPages(pages);
+  };
+
+  
 
   const handleQueryChange = (e) => {
     setSearchQuery(e.target.value);
@@ -135,6 +169,23 @@ export default function ListToursCtrl(){
     }
   };
 
+  const nextPage = () => {
+    let currentPage = page;
+    if (currentPage >= pages.length) return;
+
+    currentPage = currentPage + 1;
+    setPage(currentPage);
+  };
+
+  const prevPage = () => {
+    let currentPage = page;
+    if (currentPage === 1) return;
+
+    currentPage = currentPage - 1;
+    setPage(currentPage);
+  };
+
+
   const formatCategories = () => {
     const formatted = eCategories.map((category) => {
       return {
@@ -174,6 +225,9 @@ export default function ListToursCtrl(){
         hasPages={hasPages}
         pages={pages}
         page={page}
+
+        prevPage={prevPage}
+        nextPage={nextPage}
 
         searchQuery={searchQuery}
         handleQueryChange={handleQueryChange}

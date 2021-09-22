@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import DashHeader from "../../DashHeader";
-import { Dropdown, Input,} from "semantic-ui-react";
+import { Dropdown, Input,Icon} from "semantic-ui-react";
 import { ResetIcon } from "../../../icons";
 import Table from "./Table";
 
@@ -30,6 +30,10 @@ export default function ListTours({
   hasPages,
   pages,
   page,
+
+  // PAGINATION -- Methods
+  prevPage,
+  nextPage,
 
   // BATCH SELECT -- Attributes
   selectedTour,
@@ -160,6 +164,25 @@ export default function ListTours({
           handleDelete={handleDelete}
         />
       </form>
+      {/* PAGINATION */}
+      {hasPages && (
+        <div className="pagination__control">
+          <div>
+            <p style={{ marginBottom: "7px" }}>
+              Page {page} of {pages.length}
+            </p>
+            <div className="control">
+              <button onClick={() => prevPage()}>
+                <Icon name="caret left" />
+              </button>
+              <span>{page}</span>
+              <button onClick={() => nextPage()}>
+                <Icon name="caret right" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
 
 
