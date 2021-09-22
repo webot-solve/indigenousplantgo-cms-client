@@ -1324,3 +1324,21 @@ export const updateLearnMore = async (id, learnMore) => {
     };
   }
 };
+
+
+/* =================================================
+TOURS 
+==================================================*/
+
+export const getAllTours = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/tours`);
+
+    return response.data;
+  } catch (error) {
+    console.log(error.reponse);
+    return {
+      error: error.response,
+    };
+  }
+};
