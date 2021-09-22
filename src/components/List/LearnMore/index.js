@@ -62,7 +62,7 @@ export default function ListLearnMore({
         return (
           <>
             <p>
-              Deleting this plant will remove all instances of the plant&nbsp;
+              Deleting this will remove all instances of the learn more&nbsp;
               <strong style={{ color: "var(--danger)" }}>
                 {pendingDelete.learn_more_title}
               </strong>
@@ -240,13 +240,13 @@ export default function ListLearnMore({
           </div>
         </div>
       )}
-      
-       <Modal
+
+      <Modal
         isActive={modalActive}
         title={
           modalState === "single"
             ? `Delete ${pendingDelete.learn_more_title}?`
-            : `Delete all ${selectedLearnMore.length} plants?`
+            : `Delete all ${selectedLearnMore.length} learn more?`
         }
         subtitle={modalState === "single" ? null : `Bulk Delete`}
         closeModal={closeModal}
