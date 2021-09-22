@@ -6,13 +6,13 @@ import {
   getAudios,
   getVideos,
   getCategoryGroup,
-
+  getTags,
+  updateLearnMore,
 } from "../../../network";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 export default function EditLearnMoreCtrl(){
-
   let isMounted = true;
   const history = useHistory();
   const [learnMoreData, setLearnMoreData] = useState({});
@@ -26,14 +26,12 @@ export default function EditLearnMoreCtrl(){
   const [images, setImages] = useState([]);
   const [audioFiles, setAudioFiles] = useState([]);
   const [videos, setVideos] = useState([]);
-
   const [categories, setCategories] = useState([]);
-
-
+  const [tags, setTags] = useState([]);
   const [learnMoreTitle, setLearnMoreTitle] = useState("");
   const [description, setDescription] = useState("");
   const [customFields, setCustomFields] = useState([]);
-
+  const [isVisible, setIsVisible] = useState(true);
 
   // ===============================================================
   // SELECTION DATA
@@ -43,6 +41,7 @@ export default function EditLearnMoreCtrl(){
   const [eAudios, setEAudios] = useState([]);
   const [eVideos, setEVideos] = useState([]);
   const [eCategories, setECategories] = useState([]);
+  const [eTags, setETags] = useState([]);
 
 
    // Error handling
@@ -50,6 +49,17 @@ export default function EditLearnMoreCtrl(){
    // Preloader
    const [loading, setLoading] = useState(false);
 
+   useEffect(() => {
+    if (isMounted) resetDirective();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [directive]);
+
+  const resetDirective = async () => {
+    await setTimeout(() => {
+      if (!isMounted) return;
+      setDirective(null);
+    }, 4000);
+  };
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     isMounted = true;
@@ -61,7 +71,7 @@ export default function EditLearnMoreCtrl(){
         await queryAudios();
         await queryVideos();
         await queryCategories();
-    
+        await queryTags();
         setLoading(false);
       })();
     }
@@ -111,8 +121,13 @@ export default function EditLearnMoreCtrl(){
     if (result.error) return;
     if (!isMounted) return;
     setECategories(result);
+  };
 
-    console.log("Test",eCategories);
+  const queryTags = async () => {
+    const result = await getTags();
+    if (result.error) return;
+    if (!isMounted) return;
+    setETags(result);
   };
 
 
@@ -124,6 +139,12 @@ export default function EditLearnMoreCtrl(){
     const mappedData = data.map((d) => d._id);
     if (!isMounted) return;
     setCategories(mappedData);
+  };
+
+  const tagsChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    if (!isMounted) return;
+    setTags(mappedData);
   };
 
   const learnMoreTitleChanged = (data) => {
@@ -154,25 +175,69 @@ export default function EditLearnMoreCtrl(){
     setVideos(mappedData);
   };
 
+  const isVisibleChanged = (data) => {
+    if (!isMounted) return;
+    setIsVisible(data);
+  };
+
+  // ===============================================================
+  // POST
+  // @desc updates the Plant.
+  // ===============================================================
+  const handleUpdate = async () => {
+    if (!isMounted) return;
+    if (!learnMoreTitle ||  !description)
+      return setDirective({
+        header: "Error updating item",
+        message: "Missing required fields",
+        success: false,
+      });
+    setLoading(true);
+    const learnMore = {
+      learn_more_title: learnMoreTitle,
+      description: description,
+      images: images,
+      audio_files: audioFiles,
+      videos: videos,
+      tags: tags,
+      categories: categories,
+      custom_fields: customFields,
+      isPublish: isVisible,
+    };
+
+    const result = await updateLearnMore(learnMoreId, learnMore);
+    if (!isMounted) return;
+    setLoading(false);
+    if (result.error)
+      return setDirective({
+        header: "Error updating item",
+        message: result.error.data.error,
+        success: false,
+      });
+    history.push("/learnmore");
+  };
+
   return (
     <EditLearnMore
-      
       learnMoreData = {learnMoreData}
       // METHODS
       categoriesChanged={categoriesChanged}
+      tagsChanged={tagsChanged}
       learnMoreTitleChanged ={learnMoreTitleChanged}
       descriptionChanged={descriptionChanged}
       customFieldsChanged={customFieldsChanged}
-
       imagesChanged={imagesChanged}
       audioFilesChanged={audioFilesChanged}
       videosChanged={videosChanged}
+      isVisibleChanged={isVisibleChanged}
+      handleUpdate={handleUpdate}
 
       // SELECTION DATA
       eImages={eImages}
       eAudios={eAudios}
       eVideos={eVideos}
       eCategories={eCategories}
+      eTags={eTags}
 
       // QUERIES
       queryLearnMore={queryLearnMore}
@@ -180,13 +245,9 @@ export default function EditLearnMoreCtrl(){
       queryAudios={queryAudios}
       queryVideos={queryVideos}
       queryCategories={queryCategories}
-      
-
+      queryTags={queryTags}
       loading={loading}
       directive={directive}
-    
     />
-   
-
-  )
+  );
 }

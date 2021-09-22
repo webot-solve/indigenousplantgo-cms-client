@@ -12,35 +12,47 @@ import Message from "../../Message";
 
 export default function EditLearnMore({
   learnMoreData,
-
+  // METHODS
   categoriesChanged,
+  tagsChanged,
   learnMoreTitleChanged,
   customFieldsChanged,
-
   imagesChanged,
   audioFilesChanged,
   videosChanged,
-
   descriptionChanged,
+  isVisibleChanged,
+  handleUpdate,
 
   // SELECTION DATA
   eImages,
   eAudios,
   eVideos,
   eCategories,
+  eTags,
 
   // QUERIES
   queryImages,
   queryAudios,
   queryVideos,
-  queryCategories
-
-
+  queryCategories,
+  queryTags,
+  loading,
+  directive,
 
 }){
-  console.log("AJP",eCategories)
+  
   return(
     <div>
+       {typeof directive === "object" &&
+        directive !== null &&
+        Object.keys(directive).length > 0 && (
+          <Message
+            success={directive.success}
+            header={directive.header}
+            message={directive.message}
+          />
+        )}
        <DashHeader
         title={
           learnMoreData && learnMoreData.learn_more_title
@@ -50,8 +62,8 @@ export default function EditLearnMore({
             : "Edit Learn More Item"
         }
         action="Update"
-        // loading={loading}
-        // method={() => handleUpdate()}
+        loading={loading}
+        method={() => handleUpdate()}
       />
       <div className="form__grid">
         <div className="col">
@@ -107,12 +119,21 @@ export default function EditLearnMore({
             resource="learnMore"
             setter={(data) => categoriesChanged(data)}
           />
-         
+          <TextPickerCtrl
+            label={"tag"}
+            dataLabel={"tag"}
+            data={eTags}
+            selected={learnMoreData.tags}
+            query={queryTags}
+            setter={(data) => tagsChanged(data)}
+          />
+            <TogglerCtrl
+            label={"visibility"}
+            eValue={learnMoreData.isPublish}
+            setter={(data) => isVisibleChanged(data)}
+          />
         </div>
-
-
       </div>
-
     </div>
-  )
+  );
 }
