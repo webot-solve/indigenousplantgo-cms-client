@@ -22,6 +22,7 @@ import WaypointCategories from "../pages/waypoints/WaypointCategories";
 import AllLearnMore from '../pages/learnmore/AllLearnMore';
 import AddLearnMore from '../pages/learnmore/AddLearnMore';
 import EditLearnMore from "../pages/learnmore/EditLearnMore";
+import LearnMoreCategories from "../pages/learnmore/LearnMoreCategories";
 
 // 4.0 USERS
 import AllUsers from "../pages/users/AllUsers";
@@ -124,6 +125,11 @@ export default function Navigation() {
           exact
           path="/learnmore/edit/:learnMoreId"
           component={EditLearnMore}
+        />
+         <PrivateRoute
+          exact
+          path="/learnmore/categories"
+          component={LearnMoreCategories}
         />
 
 
