@@ -82,8 +82,8 @@ export default function ListToursCtrl(){
   const handleFilterChange = (e, data) => {
     setCategoryFilter(data.value);
   };
-  const applyFilter = () => {
-    
+
+  const applyFilter = () => {  
     if(categoryFilter === "default" && !searchQuery){
       setToursData_(toursData)
       return;
@@ -91,30 +91,32 @@ export default function ListToursCtrl(){
 
     const searchData = toursData
       //filter by SEARCH TERM
-      .filter(item => {
-        if(!searchQuery) {
-          return item;
-        } 
-        
+      .filter(item => { 
+        if(!searchQuery) return item; 
         return item.tour_name
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase())
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
       })
-  
       // filter by CATEGORY
       .filter(item => {
-        if(categoryFilter === "default"){
-          return item;
-        }
+        if(categoryFilter === "default") return item;
         return (item.categories.map( categoryItem => categoryItem.category_name)
           .join()
-         .toLowerCase()
-         .includes(categoryFilter.toLowerCase())
-        
+          .toLowerCase()
+          .includes(categoryFilter.toLowerCase())
          )
       })
+
     setToursData_(searchData);
   }
+
+  const resetFilters = () => {
+    setToursData_(toursData);
+    setCategoryFilter("default");
+  };
+  const clearSearch = () => {
+    setSearchQuery("");
+  };
 
   const batchSelect = () => {
     const resourceIds = toursData.map((learnMore) => learnMore._id);
@@ -178,16 +180,14 @@ export default function ListToursCtrl(){
         handleFilterChange={handleFilterChange}
         applyFilters={applyFilter}
 
+        clearSearch={clearSearch}
+        resetFilters={resetFilters}
+
         categories={formattedCategories}
         categoryFilter={categoryFilter}
 
-       
-
-
-        
         selectedTour={selectedTour}
         batchSelect={batchSelect}
-
 
         bulkAction={bulkAction}
         handleBulkActionChange={handleBulkActionChange}

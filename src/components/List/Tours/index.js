@@ -2,18 +2,20 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import DashHeader from "../../DashHeader";
 import { Dropdown, Input,} from "semantic-ui-react";
+import { ResetIcon } from "../../../icons";
 import Table from "./Table";
 
 import { Loader } from "semantic-ui-react";
 
 export default function ListTours({
+  // Data
   toursData,
-  loading,
 
   // SEARCH -- Attributes
   searchQuery,
   // SEARCH -- Methods
   handleQueryChange,
+  clearSearch,
 
   // FILTERS -- Attributes
   categoryFilter,
@@ -22,6 +24,7 @@ export default function ListTours({
   // FILTERS -- Methods
   handleFilterChange,
   applyFilters,
+  resetFilters,
 
   // PAGINATION -- Attributes
   hasPages,
@@ -41,8 +44,11 @@ export default function ListTours({
   handleBulkActionChange,
   handleBulkDelete,
 
-   // DELETE -- Methods
-   handleDelete,
+  // DELETE -- Methods
+  handleDelete,
+
+  // LOADING -- Attributes
+  loading,
 }){
   const history = useHistory();
   return (
@@ -77,6 +83,17 @@ export default function ListTours({
 
            {/* FILTER ACTION BY CATEGORIES */}
            <div className="table__action">
+           {categoryFilter !== "default" && (
+                <button
+                  onClick={() => resetFilters()}
+                  className="sub__action resets"
+                >
+                  <span>
+                    <ResetIcon />
+                  </span>
+                  Reset Filters
+                </button>
+              )}
     
             <Dropdown
               placeholder={"All Categories"}
@@ -94,11 +111,11 @@ export default function ListTours({
 
            {/* SEARCH ACTION */}
            <div className="table__action">
-          {/* {searchQuery && (
+          {searchQuery && (
               <button onClick={() => clearSearch()} className="sub__action">
                 Clear search
               </button>
-            )} */}
+            )}
             <Input
               placeholder={`Enter search query`}
               style={style.input}
