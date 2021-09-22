@@ -117,7 +117,7 @@ export default function EditLearnMoreCtrl(){
   };
 
   const queryCategories = async () => {
-    const result = await getCategoryGroup("learnMore");
+    const result = await getCategoryGroup("learn_more");
     if (result.error) return;
     if (!isMounted) return;
     setECategories(result);

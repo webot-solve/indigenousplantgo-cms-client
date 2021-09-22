@@ -102,7 +102,7 @@ export default function AddLearnMore({
             dataLabel={"category"}
             data={eCategories}
             query={queryCategories}
-            resource="learnMore"
+            resource="learn_more"
             setter={(data) => categoriesChanged(data)}
           />
           <TextPickerCtrl

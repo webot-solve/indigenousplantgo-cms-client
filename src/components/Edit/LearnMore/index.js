@@ -116,7 +116,7 @@ export default function EditLearnMore({
             data={eCategories}
             query={queryCategories}
             selected={learnMoreData.categories}
-            resource="learnMore"
+            resource="learn_more"
             setter={(data) => categoriesChanged(data)}
           />
           <TextPickerCtrl
