@@ -9,6 +9,10 @@ export default function ListToursCtrl(){
   let isMounted = true;
   const [toursData, setToursData] = useState([]);
 
+  const [selectedTour, setSelectedTour] = useState([]);
+  const [modalActive, setModalActive] = useState(false);
+  const [modalState, setModalState] = useState("single");
+  const [bulkAction, setBulkAction] = useState("");
   const [loading, setLoading] = useState(false);
 
  
@@ -37,11 +41,30 @@ export default function ListToursCtrl(){
     setToursData(result);
   };
 
+  // ================== DELETE
+
+  const handleBulkActionChange = (_, data) => {
+    const value = data.value;
+    setBulkAction(value);
+  };
+
+  const handleBulkDelete = () => {
+    if (selectedTour.length < 1) return;
+    if (bulkAction === "default") return;
+    setModalState("bulk");
+    setModalActive(true);
+  };
+
+
   return (
     <div>
       <ListTours
         toursData = {toursData}
         loading = {loading}
+
+        bulkAction={bulkAction}
+        handleBulkActionChange={handleBulkActionChange}
+        handleBulkDelete={handleBulkDelete}
       />
     </div>
   );
