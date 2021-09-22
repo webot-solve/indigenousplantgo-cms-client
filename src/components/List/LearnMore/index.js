@@ -16,9 +16,9 @@ export default function ListLearnMore({
   // SEARCH -- Methods
   handleQueryChange,
   clearSearch,
-   // FILTERS -- Attributes
-   categoryFilter,
-   categories,
+  // FILTERS -- Attributes
+  categoryFilter,
+  categories,
   // FILTERS -- Methods
   handleFilterChange,
   resetFilters,
