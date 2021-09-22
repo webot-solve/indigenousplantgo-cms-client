@@ -1,10 +1,27 @@
-import React from "react"
+import React from "react";
+import { useHistory } from "react-router-dom";
+import DashHeader from "../../DashHeader";
 
-export default function ListTours(){
+import { Loader } from "semantic-ui-react";
+
+export default function ListTours({
+  toursData,
+  loading
+}){
+  const history = useHistory();
   return (
-    <>
-      Hello from list tours component
-    
-    </>
+    <div>
+      <DashHeader
+        title="Tours"
+        action="Add New"
+        method={() => history.push("/tours/add")}
+      />
+       <div style={{ marginBottom: 10, display: "flex" }}>
+        <p>
+          <strong>Results</strong> ({toursData.length}){" "}
+        </p>
+      </div>
+      {loading && <Loader active inline size="tiny" />}
+    </div>
   )
 }
