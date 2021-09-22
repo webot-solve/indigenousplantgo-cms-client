@@ -64,13 +64,13 @@ export default function AddLearnMore({
               label={"Learn More Title"}
               setter={(data) => learnMoreNameChanged(data)}
             />      
-          <CustomFieldPickerCtrl
-            label={"Custom Field"}
-            setter={(data) => customFieldsChanged(data)}
-          />
           <TextAreaCtrl
             label={"Description"}
             setter={(data) => descriptionChanged(data)}
+          />
+          <CustomFieldPickerCtrl
+            label={"Custom Field"}
+            setter={(data) => customFieldsChanged(data)}
           />
         </div>
         <div className="col">
