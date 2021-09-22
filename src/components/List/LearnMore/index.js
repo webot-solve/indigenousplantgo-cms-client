@@ -62,7 +62,7 @@ export default function ListLearnMore({
         return (
           <>
             <p>
-              Deleting this will remove all instances of the learn more&nbsp;
+              Deleting this will remove all instances of the learn more items&nbsp;
               <strong style={{ color: "var(--danger)" }}>
                 {pendingDelete.learn_more_title}
               </strong>
@@ -97,7 +97,7 @@ export default function ListLearnMore({
               >
                 all
               </strong>{" "}
-              instances of the deleted plants. Do you wish to proceed?
+              instances of the deleted learn more items. Do you wish to proceed?
             </p>
             <button onClick={() => applyBulkDelete()} className="field__button">
               Yes, I know what I am doing.
@@ -246,7 +246,7 @@ export default function ListLearnMore({
         title={
           modalState === "single"
             ? `Delete ${pendingDelete.learn_more_title}?`
-            : `Delete all ${selectedLearnMore.length} learn more?`
+            : `Delete all ${selectedLearnMore.length} learn more items?`
         }
         subtitle={modalState === "single" ? null : `Bulk Delete`}
         closeModal={closeModal}
