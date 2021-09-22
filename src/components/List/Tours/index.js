@@ -68,7 +68,7 @@ export default function ListTours({
         return (
           <>
             <p>
-              Deleting this plant will remove all instances of the tours&nbsp;
+              Deleting this item will remove all instances of the tours&nbsp;
               <strong style={{ color: "var(--danger)" }}>
                 {pendingDelete.tour_name}
               </strong>
@@ -103,7 +103,7 @@ export default function ListTours({
               >
                 all
               </strong>{" "}
-              instances of the deleted plants. Do you wish to proceed?
+              instances of the deleted tour. Do you wish to proceed?
             </p>
             <button onClick={() => applyBulkDelete()} className="field__button">
               Yes, I know what I am doing.
