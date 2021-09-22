@@ -4,7 +4,6 @@ import ListCategoriesCtrl from "../../controllers/List/Categories/ListCategories
 export default function LearnMoreCategories() {
   return (
     <main>
-      LearnMoreCategories
       <ListCategoriesCtrl
         dataLabel={"learn_more"}
         label={"Learn More"}
