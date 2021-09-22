@@ -1,60 +1,126 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import DashHeader from "../../DashHeader";
+import Table from "./Table";
+import Modal from "../../Modal";
+
+import { useHistory } from "react-router-dom";
 import { Dropdown, Input,Icon} from "semantic-ui-react";
 import { ResetIcon } from "../../../icons";
-import Table from "./Table";
-
 import { Loader } from "semantic-ui-react";
 
 export default function ListTours({
   // Data
   toursData,
-
   // SEARCH -- Attributes
   searchQuery,
   // SEARCH -- Methods
   handleQueryChange,
   clearSearch,
-
   // FILTERS -- Attributes
   categoryFilter,
   categories,
-
   // FILTERS -- Methods
   handleFilterChange,
   applyFilters,
   resetFilters,
-
   // PAGINATION -- Attributes
   hasPages,
   pages,
   page,
-
   // PAGINATION -- Methods
   prevPage,
   nextPage,
-
   // BATCH SELECT -- Attributes
   selectedTour,
-
   // BATCH SELECT -- Methods
   batchSelect,
   handleSelected,
-
   // BULK ACTION -- Attributes
   bulkAction,
   // BULK ACTION -- Methods
   handleBulkActionChange,
   handleBulkDelete,
+  applyBulkDelete,
 
   // DELETE -- Methods
   handleDelete,
+
+  // MODAL -- Attributes
+  modalState,
+  modalActive,
+  // MODAL -- Methods
+  closeModal,
+
+  // DELETE -- Attributes
+  pendingDelete,
+
+  // DELETE -- Methods
+  
+  applyDelete,
 
   // LOADING -- Attributes
   loading,
 }){
   const history = useHistory();
+  const renderModal = () => {
+    switch (modalState) {
+      case "single":
+        return (
+          <>
+            <p>
+              Deleting this plant will remove all instances of the tours&nbsp;
+              <strong style={{ color: "var(--danger)" }}>
+                {pendingDelete.tour_name}
+              </strong>
+              . Do you wish to proceed?
+            </p>
+            <button onClick={() => applyDelete()} className="field__button">
+              Yes, I know what I am doing.
+            </button>
+            <button
+              onClick={() => closeModal()}
+              className="field__button secondary"
+            >
+              No, cancel my request.
+            </button>
+          </>
+        );
+      case "bulk":
+        return (
+          <>
+            <p>
+              Deleting&nbsp;
+              <strong style={{ color: "var(--danger)" }}>
+                {selectedTour.length}
+              </strong>
+              &nbsp;learn more will remove{" "}
+              <strong
+                style={{
+                  color: "var(--danger)",
+                  fontWeight: "700",
+                  textTransform: "uppercase",
+                }}
+              >
+                all
+              </strong>{" "}
+              instances of the deleted plants. Do you wish to proceed?
+            </p>
+            <button onClick={() => applyBulkDelete()} className="field__button">
+              Yes, I know what I am doing.
+            </button>
+            <button
+              onClick={() => closeModal()}
+              className="field__button secondary"
+            >
+              No, cancel my request.
+            </button>
+          </>
+        );
+      default:
+        return <></>;
+    }
+  };
+
   return (
     <div>
       <DashHeader
@@ -184,11 +250,22 @@ export default function ListTours({
         </div>
       )}
 
+      <Modal
+        isActive={modalActive}
+        title={
+          modalState === "single"
+            ? `Delete ${pendingDelete.tour_name}?`
+            : `Delete all ${selectedTour.length} tours?`
+        }
+        subtitle={modalState === "single" ? null : `Bulk Delete`}
+        closeModal={closeModal}
+      >
+        {renderModal()}
+      </Modal>
 
 
 
     </div>
-    
   )
 }
 

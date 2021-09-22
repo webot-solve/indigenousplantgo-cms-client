@@ -2,7 +2,9 @@ import React, {useEffect, useState} from "react";
 import ListTours from "../../../components/List/Tours/index";
 import {
   getAllTours,
-  getCategoryGroup
+  getCategoryGroup,
+  deleteTour,
+  bulkDeleteTours
 } from "../../../network"
 
 export default function ListToursCtrl(){
@@ -22,8 +24,8 @@ export default function ListToursCtrl(){
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(1);
 
-
   const [modalActive, setModalActive] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState({});
   const [modalState, setModalState] = useState("single");
   const [bulkAction, setBulkAction] = useState("");
 
@@ -108,7 +110,18 @@ export default function ListToursCtrl(){
     setPages(pages);
   };
 
-  
+  const formatCategories = () => {
+    const formatted = eCategories.map((category) => {
+      return {
+        ...category,
+        key: category._id,
+        value: category.category_name,
+        text: category.category_name,
+      };
+    });
+
+    setFormattedCategories(formatted);
+  };
 
   const handleQueryChange = (e) => {
     setSearchQuery(e.target.value);
@@ -152,6 +165,19 @@ export default function ListToursCtrl(){
     setSearchQuery("");
   };
 
+  const handleSelected = (e) => {
+    const id = e.target.value;
+    let newSelected = [...selectedTour];
+
+    if (selectedTour.includes(id)) {
+      newSelected = newSelected.filter((item) => item !== id);
+    } else {
+      newSelected = [...newSelected, id];
+    }
+
+    setSelectedTour(newSelected);
+  };
+
   const batchSelect = () => {
     const resourceIds = toursData.map((learnMore) => learnMore._id);
     const selectedIds = selectedTour;
@@ -185,23 +211,33 @@ export default function ListToursCtrl(){
     setPage(currentPage);
   };
 
+  // ================== DELETE
 
-  const formatCategories = () => {
-    const formatted = eCategories.map((category) => {
-      return {
-        ...category,
-        key: category._id,
-        value: category.category_name,
-        text: category.category_name,
-      };
-    });
-
-    setFormattedCategories(formatted);
+  const handleDelete = async (e) => {
+    if (!isMounted) return;
+    setModalState("single");
+    const id = e.target.value;
+    const foundLearnMore = toursData.filter((learnMore) => learnMore._id === id)[0];
+    if (!foundLearnMore) return;
+    await setPendingDelete(foundLearnMore);
+    setModalActive(true);
   };
 
+  const applyDelete = async () => {
+    if (!isMounted) return;
+    const id = pendingDelete._id;
+    if (!id) return;
+    const result = await deleteTour(id);
+    if (result.error) return;
+    if (!isMounted) return;
+    closeModal();
+    setPendingDelete({});
+    queryTours();
+  };
 
-
-  // ================== DELETE
+  const closeModal = () => {
+    setModalActive(false);
+  };
 
   const handleBulkActionChange = (_, data) => {
     const value = data.value;
@@ -215,9 +251,17 @@ export default function ListToursCtrl(){
     setModalActive(true);
   };
 
+  const applyBulkDelete = async () => {
+    if (!isMounted) return;
+    const result = await bulkDeleteTours(selectedTour);
+    if (result.error) return;
+    if (!isMounted) return;
+    closeModal();
+    setSelectedTour([]);
+    queryTours();
+  };
 
   return (
-    <div>
       <ListTours
         toursData = {toursData_}
         loading = {loading}
@@ -241,12 +285,21 @@ export default function ListToursCtrl(){
         categoryFilter={categoryFilter}
 
         selectedTour={selectedTour}
+        handleSelected={handleSelected}
         batchSelect={batchSelect}
 
+        handleDelete={handleDelete}
+        modalState={modalState}
+        modalActive={modalActive}
+        pendingDelete={pendingDelete}
+
         bulkAction={bulkAction}
+        applyDelete={applyDelete}
         handleBulkActionChange={handleBulkActionChange}
         handleBulkDelete={handleBulkDelete}
+        applyBulkDelete={applyBulkDelete}
+
+        closeModal={closeModal}
       />
-    </div>
   );
 }
