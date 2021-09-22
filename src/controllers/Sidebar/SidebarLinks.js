@@ -70,19 +70,19 @@ export const sidebarLinks = [
   {
     label: "learnmore",
     formattedLabel: "Learn More",
-    navigationPath: "/learn_more",
+    navigationPath: "/learnmore",
     subItems: [
       {
         label: "All Learn More",
-        navigationPath: "/learn_more",
+        navigationPath: "/learnmore",
       },
       {
         label: "Add New",
-        navigationPath: "/learn_more/add",
+        navigationPath: "/learnmore/add",
       },
       {
         label: "Categories",
-        navigationPath: "/learn_more/categories",
+        navigationPath: "/learnmore/categories",
       },
     ],
   },

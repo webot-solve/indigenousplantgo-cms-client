@@ -119,7 +119,7 @@ export default function ListLearnMore({
       <DashHeader
         title="Learn More"
         action="Add New"
-        method={() => history.push("/learn_more/add")}
+        method={() => history.push("/learnmore/add")}
       />
       <div style={{ marginBottom: 10, display: "flex" }}>
         <p>
