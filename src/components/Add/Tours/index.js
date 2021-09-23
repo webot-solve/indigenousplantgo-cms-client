@@ -8,7 +8,6 @@ import TextAreaCtrl from "../../../controllers/Forms/TextArea/TextAreaCtrl";
 import TogglerCtrl from "../../../controllers/Forms/Toggler/TogglerCtrl";
 import Message from "../../Message";
 
-
 export default function AddTour({
   // METHODS
   handlePublish,
@@ -16,11 +15,9 @@ export default function AddTour({
   tourNameChanged,
   descriptionChanged,
   customFieldsChanged,
-
   imagesChanged,
   audioFilesChanged,
   videosChanged,
-
   categoriesChanged,
   tagsChanged,
   isVisibleChanged,
@@ -43,7 +40,7 @@ export default function AddTour({
   loading,
   directive,
 }){
-  
+
   return (
     <div>
       {typeof directive === "object" &&
@@ -122,10 +119,7 @@ export default function AddTour({
             setter={(data) => isVisibleChanged(data)}
           />
         </div>
-
       </div>
-
-
     </div>
   )
 }

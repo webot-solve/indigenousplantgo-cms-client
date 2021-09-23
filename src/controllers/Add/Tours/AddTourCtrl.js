@@ -9,14 +9,13 @@ import {
   getCategoryGroup,
   getTags,
   createTour,
- 
 } from "../../../network";
 
 export default function AddTourCtrl(){
   let isMounted = true;
   const history = useHistory();
 
-   // ===============================================================
+  // ===============================================================
   // FORM DATA
   // @desc form control data
   // ===============================================================
@@ -31,8 +30,6 @@ export default function AddTourCtrl(){
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
   const [isVisible, setIsVisible] = useState(true);
-
-  
 
   // ===============================================================
   // SELECTION DATA
@@ -102,21 +99,18 @@ export default function AddTourCtrl(){
     if (!isMounted) return;
     setEAudios(result);
   };
-
   const queryVideos = async () => {
     const result = await getVideos();
     if (result.error) return;
     if (!isMounted) return;
     setEVideos(result);
   };
-
   const queryCategories = async () => {
     const result = await getCategoryGroup("learn_more");
     if (result.error) return;
     if (!isMounted) return;
     setECategories(result);
   };
-
   const queryTags = async () => {
     const result = await getTags();
     if (result.error) return;
@@ -128,7 +122,6 @@ export default function AddTourCtrl(){
   // INPUT WATCHERS AND SETTERS
   // @desc functions that watch updates in children components, and sets them here.
   // ===============================================================
-
   const tourNameChanged = (data) => {
     setTourName(data);
   };
@@ -203,7 +196,6 @@ export default function AddTourCtrl(){
         videosChanged={videosChanged}
         categoriesChanged={categoriesChanged}
         tagsChanged={tagsChanged}
-
         tourNameChanged={tourNameChanged}
         descriptionChanged={descriptionChanged}
         customFieldsChanged={customFieldsChanged}

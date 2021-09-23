@@ -12,7 +12,6 @@ import {
 } from "../../../network";
 
 export default function AddLearnMoreCtrl(){
-
   let isMounted = true;
   const history = useHistory();
   // ===============================================================
@@ -101,14 +100,12 @@ export default function AddLearnMoreCtrl(){
     if (!isMounted) return;
     setEVideos(result);
   };
-
   const queryCategories = async () => {
     const result = await getCategoryGroup("learn_more");
     if (result.error) return;
     if (!isMounted) return;
     setECategories(result);
   };
-
   const queryTags = async () => {
     const result = await getTags();
     if (result.error) return;
@@ -186,6 +183,7 @@ export default function AddLearnMoreCtrl(){
 
   return (
     <AddLearnMore
+      handlePublish={handlePublish}
       // WATCHERS
       imagesChanged={imagesChanged}
       audioFilesChanged={audioFilesChanged}
@@ -196,8 +194,7 @@ export default function AddLearnMoreCtrl(){
       learnMoreNameChanged={learnMoreNameChanged}
       descriptionChanged={descriptionChanged}
       isVisibleChanged={isVisibleChanged}
-      handlePublish={handlePublish}
-
+      
       // SELECTION DATA
       eImages={eImages}
       eAudios={eAudios}
@@ -206,7 +203,6 @@ export default function AddLearnMoreCtrl(){
       eTags={eTags}
       
       // QUERIES
-      // queryLocations={queryLocations}
       queryImages={queryImages}
       queryAudios={queryAudios}
       queryVideos={queryVideos}
