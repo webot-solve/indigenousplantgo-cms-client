@@ -16,9 +16,27 @@ export default function AddTour({
   tourNameChanged,
   descriptionChanged,
   customFieldsChanged,
+  imagesChanged,
+  audioFilesChanged,
+  videosChanged,
+
+   // SELECTION DATA
+   eImages,
+   eAudios,
+   eVideos,
+
+   // QUERIES
+  queryImages,
+  queryAudios,
+  queryVideos,
 
   // Preloader
   loading,
+
+
+  
+  
+ 
 }){
   return (
     <div>
@@ -42,6 +60,29 @@ export default function AddTour({
            <CustomFieldPickerCtrl
             label={"Custom Field"}
             setter={(data) => customFieldsChanged(data)}
+          />
+        </div>
+        <div className="col">
+          <MediaPickerCtrl
+            label={"image"}
+            dataLabel={"image"}
+            data={eImages}
+            query={queryImages}
+            setter={(data) => imagesChanged(data)}
+          />
+           <MediaPickerCtrl
+            label={"Audio File"}
+            dataLabel={"audio_file"}
+            data={eAudios}
+            query={queryAudios}
+            setter={(data) => audioFilesChanged(data)}
+          />
+           <MediaPickerCtrl
+            label={"video"}
+            dataLabel={"video"}
+            data={eVideos}
+            query={queryVideos}
+            setter={(data) => videosChanged(data)}
           />
         </div>
 
