@@ -18,7 +18,12 @@ import AddWaypoint from "../pages/waypoints/AddWaypoint";
 import EditWaypoint from "../pages/waypoints/EditWaypoint";
 import WaypointCategories from "../pages/waypoints/WaypointCategories";
 
-// 11.0 LEARN MORE
+// TOURS 
+import AllTours from "../pages/tours/AllTours";
+import AddTour from "../pages/tours/AddTour";
+
+
+// LEARN MORE
 import AllLearnMore from '../pages/learnmore/AllLearnMore';
 import AddLearnMore from '../pages/learnmore/AddLearnMore';
 import EditLearnMore from "../pages/learnmore/EditLearnMore";
@@ -117,6 +122,10 @@ export default function Navigation() {
           path="/waypoints/categories"
           component={WaypointCategories}
         />
+
+        {/* TOURS  */}
+        <PrivateRoute exact path="/tours" component={AllTours}/>
+        <PrivateRoute exact path="/tours/add" component={AddTour}/>
 
         {/* LEARN MORE */}
         <PrivateRoute exact path="/learnmore" component={AllLearnMore}/>

@@ -1,42 +1,45 @@
 import React, {useEffect, useState} from "react";
-import ListLearnMore from "../../../components/List/LearnMore/index";
+import ListTours from "../../../components/List/Tours/index";
 import {
-  getAllLearnMore,
+  getAllTours,
   getCategoryGroup,
-  deleteLearnMore,
-  bulkDeleteLearnMore
+  deleteTour,
+  bulkDeleteTours
 } from "../../../network"
 
-export default function ListLearnMoreCtrl(){
+export default function ListToursCtrl(){
+
   let isMounted = true;
-  const [learnMoreData, setLearnMoreData] = useState([]);
-  const [learnMoreData_, setLearnMoreData_] = useState([]);
+  const [toursData, setToursData] = useState([]);
+  const [toursData_, setToursData_] = useState([]);
 
   const [formattedCategories, setFormattedCategories] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState("default");
+  const [eCategories, setECategories] = useState([]);
+
   const [searchQuery, setSearchQuery] = useState("");
 
-  const [selectedLearnMore, setSelectedLearnMore] = useState([]);
-
+  const [selectedTour, setSelectedTour] = useState([]);
   const [hasPages, setHasPages] = useState(false);
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(1);
-  const [eCategories, setECategories] = useState([]);
 
   const [modalActive, setModalActive] = useState(false);
   const [pendingDelete, setPendingDelete] = useState({});
   const [modalState, setModalState] = useState("single");
   const [bulkAction, setBulkAction] = useState("");
-  
+
   const [loading, setLoading] = useState(false);
+
  
+  //================ useEFFECT START===========================
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     isMounted = true;
-    queryLearnMore();
+    queryTours();
     queryCategories();
     formatPages();
-
+    
     return () => {
       isMounted = false;
     };
@@ -44,9 +47,9 @@ export default function ListLearnMoreCtrl(){
   }, []);
 
   useEffect(() => {
-    if (isMounted) setLearnMoreData_(learnMoreData);
+    if (isMounted) setToursData_(toursData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [learnMoreData]);
+  }, [toursData]);
 
   useEffect(() => {
     if (!searchQuery) applyFilter();
@@ -62,39 +65,40 @@ export default function ListLearnMoreCtrl(){
     setPage(1);
     formatPages();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [learnMoreData_]);
+  }, [toursData_]);
 
-  // ================== METHODS ========================  
-  const queryLearnMore = async () => {
+  //================ useEFFECT END============================
+
+  //================ METHODS START ===========================  
+  const queryTours = async () => {
     if (!isMounted) return;
     setLoading(true);
-    const result = await getAllLearnMore();
+    const result = await getAllTours();
     if (!isMounted) return;
     setLoading(false);
     if (result.error) return;
-    if (result.length < 1) setLearnMoreData([]);
-    setLearnMoreData(result);
+    if (result.length < 1) setToursData([]);
+    setToursData(result);
   };
 
   const queryCategories = async () => {
-    const result = await getCategoryGroup("learn_more");
+    const result = await getCategoryGroup("tour");
     if (result.error) return;
     if (!isMounted) return;
     setECategories(result);
   };
-  
+
   const formatPages = () => {
-    const dataLength = learnMoreData_.length;
+    const dataLength = toursData_.length;
     if (dataLength < 5) return setHasPages(false);
 
     setHasPages(true);
     let itemsChunk = 5,
-        learnMoreData = learnMoreData_;
+        learnMoreData = toursData_;
 
     // split the data into pages
     const pages = learnMoreData.reduce((resultArray, item, index) => {
       const chunkIndex = Math.floor(index / itemsChunk);
-
       if (!resultArray[chunkIndex]) {
         resultArray[chunkIndex] = []; // start a new chunk
       }
@@ -122,70 +126,61 @@ export default function ListLearnMoreCtrl(){
   const handleQueryChange = (e) => {
     setSearchQuery(e.target.value);
   };
-
   const handleFilterChange = (e, data) => {
     setCategoryFilter(data.value);
   };
 
-  const applyFilter = () => {
+  const applyFilter = () => {  
     if(categoryFilter === "default" && !searchQuery){
-      setLearnMoreData_(learnMoreData)
+      setToursData_(toursData)
       return;
     }
 
-    const searchData = learnMoreData
+    const searchData = toursData
       //filter by SEARCH TERM
-      .filter(item => {
-        if(!searchQuery) {
-          return item;
-        } 
-        
-        return item.learn_more_title
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase())
+      .filter(item => { 
+        if(!searchQuery) return item; 
+        return item.tour_name
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
       })
-  
       // filter by CATEGORY
       .filter(item => {
-        if(categoryFilter === "default"){
-          return item;
-        }
+        if(categoryFilter === "default") return item;
         return (item.categories.map( categoryItem => categoryItem.category_name)
           .join()
-         .toLowerCase()
-         .includes(categoryFilter.toLowerCase())
-        
+          .toLowerCase()
+          .includes(categoryFilter.toLowerCase())
          )
       })
-    
-    setLearnMoreData_(searchData)
+
+    setToursData_(searchData);
   }
 
   const resetFilters = () => {
-    setLearnMoreData_(learnMoreData);
+    setToursData_(toursData);
     setCategoryFilter("default");
   };
-
   const clearSearch = () => {
     setSearchQuery("");
   };
 
   const handleSelected = (e) => {
     const id = e.target.value;
-    let newSelected = [...selectedLearnMore];
+    let newSelected = [...selectedTour];
 
-    if (selectedLearnMore.includes(id)) {
+    if (selectedTour.includes(id)) {
       newSelected = newSelected.filter((item) => item !== id);
     } else {
       newSelected = [...newSelected, id];
     }
 
-    setSelectedLearnMore(newSelected);
+    setSelectedTour(newSelected);
   };
 
-   const batchSelect = () => {
-    const resourceIds = learnMoreData.map((learnMore) => learnMore._id);
-    const selectedIds = selectedLearnMore;
+  const batchSelect = () => {
+    const resourceIds = toursData.map((learnMore) => learnMore._id);
+    const selectedIds = selectedTour;
 
     const allSelected =
       resourceIds.length === selectedIds.length &&
@@ -194,9 +189,9 @@ export default function ListLearnMoreCtrl(){
       });
 
     if (!allSelected) {
-      setSelectedLearnMore(resourceIds);
+      setSelectedTour(resourceIds);
     } else {
-      setSelectedLearnMore([]);
+      setSelectedTour([]);
     }
   };
 
@@ -216,13 +211,13 @@ export default function ListLearnMoreCtrl(){
     setPage(currentPage);
   };
 
-  //=================== DELETE
+  // ================== DELETE
 
   const handleDelete = async (e) => {
     if (!isMounted) return;
     setModalState("single");
     const id = e.target.value;
-    const foundLearnMore = learnMoreData.filter((learnMore) => learnMore._id === id)[0];
+    const foundLearnMore = toursData.filter((learnMore) => learnMore._id === id)[0];
     if (!foundLearnMore) return;
     await setPendingDelete(foundLearnMore);
     setModalActive(true);
@@ -232,12 +227,12 @@ export default function ListLearnMoreCtrl(){
     if (!isMounted) return;
     const id = pendingDelete._id;
     if (!id) return;
-    const result = await deleteLearnMore(id);
+    const result = await deleteTour(id);
     if (result.error) return;
     if (!isMounted) return;
     closeModal();
     setPendingDelete({});
-    queryLearnMore();
+    queryTours();
   };
 
   const closeModal = () => {
@@ -250,7 +245,7 @@ export default function ListLearnMoreCtrl(){
   };
 
   const handleBulkDelete = () => {
-    if (selectedLearnMore.length < 1) return;
+    if (selectedTour.length < 1) return;
     if (bulkAction === "default") return;
     setModalState("bulk");
     setModalActive(true);
@@ -258,54 +253,53 @@ export default function ListLearnMoreCtrl(){
 
   const applyBulkDelete = async () => {
     if (!isMounted) return;
-    const result = await bulkDeleteLearnMore(selectedLearnMore);
+    const result = await bulkDeleteTours(selectedTour);
     if (result.error) return;
     if (!isMounted) return;
     closeModal();
-    setSelectedLearnMore([]);
-    queryLearnMore();
+    setSelectedTour([]);
+    queryTours();
   };
 
-  return(
-    <ListLearnMore
-      learnMoreData = {learnMoreData_}
-      loading = {loading}
+  return (
+      <ListTours
+        toursData = {toursData_}
+        loading = {loading}
 
-      hasPages={hasPages}
-      pages={pages}
-      page={page}
+        hasPages={hasPages}
+        pages={pages}
+        page={page}
 
-      prevPage={prevPage}
-      nextPage={nextPage}
+        prevPage={prevPage}
+        nextPage={nextPage}
 
-      searchQuery={searchQuery}
-      handleQueryChange={handleQueryChange}
-      handleFilterChange={handleFilterChange}
-      applyFilters={applyFilter}
+        searchQuery={searchQuery}
+        handleQueryChange={handleQueryChange}
+        handleFilterChange={handleFilterChange}
+        applyFilters={applyFilter}
 
-      resetFilters={resetFilters}
-      clearSearch={clearSearch}
+        clearSearch={clearSearch}
+        resetFilters={resetFilters}
 
-      categories={formattedCategories}
-      categoryFilter={categoryFilter}
+        categories={formattedCategories}
+        categoryFilter={categoryFilter}
 
-      selectedLearnMore={selectedLearnMore}
-      handleSelected={handleSelected}
-      batchSelect={batchSelect}
+        selectedTour={selectedTour}
+        handleSelected={handleSelected}
+        batchSelect={batchSelect}
 
-      handleDelete={handleDelete}
-      modalState={modalState}
-      modalActive={modalActive}
-      pendingDelete={pendingDelete}
+        handleDelete={handleDelete}
+        modalState={modalState}
+        modalActive={modalActive}
+        pendingDelete={pendingDelete}
 
-      bulkAction={bulkAction}
-      applyDelete={applyDelete}
-      handleBulkActionChange={handleBulkActionChange}
-      handleBulkDelete={handleBulkDelete}
-      applyBulkDelete={applyBulkDelete}
+        bulkAction={bulkAction}
+        applyDelete={applyDelete}
+        handleBulkActionChange={handleBulkActionChange}
+        handleBulkDelete={handleBulkDelete}
+        applyBulkDelete={applyBulkDelete}
 
-      closeModal={closeModal}
-
-    />
+        closeModal={closeModal}
+      />
   );
 }

@@ -1,16 +1,16 @@
 import React from "react";
 import DashHeader from "../../DashHeader";
 import Table from "./Table";
-import { useHistory } from "react-router-dom";
-import { Dropdown, Input, Icon} from "semantic-ui-react";
-import { ResetIcon } from "../../../icons";
 import Modal from "../../Modal";
+
+import { useHistory } from "react-router-dom";
+import { Dropdown, Input,Icon} from "semantic-ui-react";
+import { ResetIcon } from "../../../icons";
 import { Loader } from "semantic-ui-react";
 
-
-export default function ListLearnMore({
-  // Data to List: learnMoreData
-  learnMoreData,
+export default function ListTours({
+  // Data
+  toursData,
   // SEARCH -- Attributes
   searchQuery,
   // SEARCH -- Methods
@@ -21,8 +21,8 @@ export default function ListLearnMore({
   categories,
   // FILTERS -- Methods
   handleFilterChange,
-  resetFilters,
   applyFilters,
+  resetFilters,
   // PAGINATION -- Attributes
   hasPages,
   pages,
@@ -31,7 +31,7 @@ export default function ListLearnMore({
   prevPage,
   nextPage,
   // BATCH SELECT -- Attributes
-  selectedLearnMore,
+  selectedTour,
   // BATCH SELECT -- Methods
   batchSelect,
   handleSelected,
@@ -41,17 +41,23 @@ export default function ListLearnMore({
   handleBulkActionChange,
   handleBulkDelete,
   applyBulkDelete,
+
+  // DELETE -- Methods
+  handleDelete,
+
   // MODAL -- Attributes
-  modalActive,
   modalState,
+  modalActive,
   // MODAL -- Methods
   closeModal,
 
   // DELETE -- Attributes
   pendingDelete,
+
   // DELETE -- Methods
-  handleDelete,
+  
   applyDelete,
+
   // LOADING -- Attributes
   loading,
 }){
@@ -62,9 +68,9 @@ export default function ListLearnMore({
         return (
           <>
             <p>
-              Deleting this will remove all instances of the learn more items&nbsp;
+              Deleting this item will remove all instances of the tours&nbsp;
               <strong style={{ color: "var(--danger)" }}>
-                {pendingDelete.learn_more_title}
+                {pendingDelete.tour_name}
               </strong>
               . Do you wish to proceed?
             </p>
@@ -85,7 +91,7 @@ export default function ListLearnMore({
             <p>
               Deleting&nbsp;
               <strong style={{ color: "var(--danger)" }}>
-                {selectedLearnMore.length}
+                {selectedTour.length}
               </strong>
               &nbsp;learn more will remove{" "}
               <strong
@@ -97,7 +103,7 @@ export default function ListLearnMore({
               >
                 all
               </strong>{" "}
-              instances of the deleted learn more items. Do you wish to proceed?
+              instances of the deleted tour. Do you wish to proceed?
             </p>
             <button onClick={() => applyBulkDelete()} className="field__button">
               Yes, I know what I am doing.
@@ -114,16 +120,17 @@ export default function ListLearnMore({
         return <></>;
     }
   };
+
   return (
     <div>
       <DashHeader
-        title="Learn More"
+        title="Tours"
         action="Add New"
-        method={() => history.push("/learnmore/add")}
+        method={() => history.push("/tours/add")}
       />
-      <div style={{ marginBottom: 10, display: "flex" }}>
+       <div style={{ marginBottom: 10, display: "flex" }}>
         <p>
-          <strong>Results</strong> ({learnMoreData.length}){" "}
+          <strong>Results</strong> ({toursData.length}){" "}
         </p>
       </div>
       {loading && <Loader active inline size="tiny" />}
@@ -132,20 +139,21 @@ export default function ListLearnMore({
           {/* BULK ACTION */}
           <div className="table__action">
             <Dropdown 
-              placeholder={"Bulk Actions"}
-              onChange={(e, data) => handleBulkActionChange(e, data)}
-              value={bulkAction}
-              selection
-              options={[
-                { key: "default", value: "default", text: "Bulk Actions" },
-                { key: "delete", value: "delete", text: "Delete" },
-              ]}
+                placeholder={"Bulk Actions"}
+                onChange={(e, data) => handleBulkActionChange(e, data)}
+                value={bulkAction}
+                selection
+                options={[
+                  { key: "default", value: "default", text: "Bulk Actions" },
+                  { key: "delete", value: "delete", text: "Delete" },
+                ]}
               />
             <button onClick={() => handleBulkDelete()}>Apply</button>
           </div>
-          {/* FILTER ACTION BY CATEGORIES */}
-          <div className="table__action">
-            {categoryFilter !== "default" && (
+
+           {/* FILTER ACTION BY CATEGORIES */}
+           <div className="table__action">
+           {categoryFilter !== "default" && (
                 <button
                   onClick={() => resetFilters()}
                   className="sub__action resets"
@@ -156,6 +164,7 @@ export default function ListLearnMore({
                   Reset Filters
                 </button>
               )}
+    
             <Dropdown
               placeholder={"All Categories"}
               selection
@@ -170,8 +179,8 @@ export default function ListLearnMore({
             <button onClick={() => applyFilters()}>Filter</button>
           </div>
 
-          {/* SEARCH ACTION */}
-          <div className="table__action">
+           {/* SEARCH ACTION */}
+           <div className="table__action">
           {searchQuery && (
               <button onClick={() => clearSearch()} className="sub__action">
                 Clear search
@@ -185,10 +194,10 @@ export default function ListLearnMore({
             />
              <button onClick={() => applyFilters()}>Search</button>
           </div>
-         
+
         </div>
       </div>
-      {/* TABLE | Learn More Data */}
+      {/* TABLE | Tours Data */}
       <form>
         <div className="table__heading table__row">
           <div className="table__col head select">
@@ -215,9 +224,9 @@ export default function ListLearnMore({
           </div>
         </div>
         <Table 
-          learnMoreData={ hasPages ? pages[page-1] : learnMoreData}
+          toursData={ hasPages ? pages[page-1] : toursData}
           handleSelected={handleSelected}
-          selectedLearnMore={selectedLearnMore}
+          selectedTour={selectedTour}
           handleDelete={handleDelete}
         />
       </form>
@@ -245,14 +254,17 @@ export default function ListLearnMore({
         isActive={modalActive}
         title={
           modalState === "single"
-            ? `Delete ${pendingDelete.learn_more_title}?`
-            : `Delete all ${selectedLearnMore.length} learn more items?`
+            ? `Delete ${pendingDelete.tour_name}?`
+            : `Delete all ${selectedTour.length} tours?`
         }
         subtitle={modalState === "single" ? null : `Bulk Delete`}
         closeModal={closeModal}
       >
         {renderModal()}
       </Modal>
+
+
+
     </div>
   )
 }

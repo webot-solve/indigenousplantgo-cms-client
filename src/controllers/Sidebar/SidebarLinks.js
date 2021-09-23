@@ -47,25 +47,25 @@ export const sidebarLinks = [
     ],
   },
   // Tours
-  // {
-  //   label: "tours",
-  //   formattedLabel: "Tours",
-  //   navigationPath: "/tours",
-  //   subItems: [
-  //     {
-  //       label: "All Tours",
-  //       navigationPath: "/tours",
-  //     },
-  //     {
-  //       label: "Add New",
-  //       navigationPath: "/tours/add",
-  //     },
-  //     {
-  //       label: "Categories",
-  //       navigationPath: "/tours/categories",
-  //     },
-  //   ],
-  // },
+  {
+    label: "tours",
+    formattedLabel: "Tours",
+    navigationPath: "/tours",
+    subItems: [
+      {
+        label: "All Tours",
+        navigationPath: "/tours",
+      },
+      {
+        label: "Add New",
+        navigationPath: "/tours/add",
+      },
+      {
+        label: "Categories",
+        navigationPath: "/tours/categories",
+      },
+    ],
+  },
   // LEARN MORE v2
   {
     label: "learnmore",
