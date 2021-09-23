@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import AddTour from "../../../components/Add/Tours";
+import { useHistory } from "react-router-dom";
 
 import {
   getImages,
@@ -7,11 +8,13 @@ import {
   getVideos,
   getCategoryGroup,
   getTags,
+  createTour,
  
 } from "../../../network";
 
 export default function AddTourCtrl(){
   let isMounted = true;
+  const history = useHistory();
 
    // ===============================================================
   // FORM DATA
@@ -161,12 +164,39 @@ export default function AddTourCtrl(){
     setIsVisible(data);
   };
 
+  // CREATE TOUR
+  const handlePublish = async () => {
+    if (!isMounted) return;
+    setLoading(true);
+    const tour = {
+      tour_name: tourName,
+      description: description,
+      images: images,
+      audio_files: audioFiles,
+      videos: videos,
+      tags: tags,
+      categories: categories,
+      custom_fields: customFields,
+      isPublish: isVisible,
+    };
 
+    const result = await createTour(tour);
+    if (!isMounted) return;
+    setLoading(false);
+    if (result.error)
+      return setDirective({
+        header: "Error creating tour",
+        message: result.error.data.error,
+        success: false,
+      });
+    history.push("/tours");
+  };
 
 
   return (
     <div>
       <AddTour
+        handlePublish={handlePublish}
         // WATCHERS
         imagesChanged={imagesChanged}
         audioFilesChanged={audioFilesChanged}
@@ -177,7 +207,6 @@ export default function AddTourCtrl(){
         tourNameChanged={tourNameChanged}
         descriptionChanged={descriptionChanged}
         customFieldsChanged={customFieldsChanged}
-
         isVisibleChanged={isVisibleChanged}
 
         // SELECTION DATA
