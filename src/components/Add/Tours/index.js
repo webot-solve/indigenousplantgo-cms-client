@@ -16,11 +16,14 @@ export default function AddTour({
   tourNameChanged,
   descriptionChanged,
   customFieldsChanged,
+
   imagesChanged,
   audioFilesChanged,
   videosChanged,
+
   categoriesChanged,
   tagsChanged,
+  isVisibleChanged,
 
   // SELECTION DATA
   eImages,
@@ -106,6 +109,11 @@ export default function AddTour({
             data={eTags}
             query={queryTags}
             setter={(data) => tagsChanged(data)}
+          />
+          <TogglerCtrl
+            label={"visibility"}
+            eValue={true}
+            setter={(data) => isVisibleChanged(data)}
           />
         </div>
 

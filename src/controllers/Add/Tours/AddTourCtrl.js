@@ -27,6 +27,7 @@ export default function AddTourCtrl(){
 
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
+  const [isVisible, setIsVisible] = useState(true);
 
   
 
@@ -86,6 +87,16 @@ export default function AddTourCtrl(){
   // @desc functions that watch updates in children components, and sets them here.
   // ===============================================================
 
+  const tourNameChanged = (data) => {
+    setTourName(data);
+  };
+  const descriptionChanged = (data) => {
+    setDescription(data);
+  };
+  const customFieldsChanged = (data) => {
+    setCustomFields(data);
+  };
+
   const imagesChanged = (data) => {
     const mappedData = data.map((d) => d._id);
     setImages(mappedData);
@@ -107,17 +118,11 @@ export default function AddTourCtrl(){
     setTags(mappedData);
   };
 
+  const isVisibleChanged = (data) => {
+    setIsVisible(data);
+  };
 
 
-  const tourNameChanged = (data) => {
-    setTourName(data);
-  };
-  const descriptionChanged = (data) => {
-    setDescription(data);
-  };
-  const customFieldsChanged = (data) => {
-    setCustomFields(data);
-  };
 
 
   return (
@@ -133,6 +138,8 @@ export default function AddTourCtrl(){
         tourNameChanged={tourNameChanged}
         descriptionChanged={descriptionChanged}
         customFieldsChanged={customFieldsChanged}
+
+        isVisibleChanged={isVisibleChanged}
 
         // SELECTION DATA
         eImages={eImages}
