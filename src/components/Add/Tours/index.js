@@ -7,11 +7,11 @@ import TextInputCtrl from "../../../controllers/Forms/TextInput/TextInputCtrl";
 import TextAreaCtrl from "../../../controllers/Forms/TextArea/TextAreaCtrl";
 import TogglerCtrl from "../../../controllers/Forms/Toggler/TogglerCtrl";
 import Message from "../../Message";
+import ContentPickerCtrl from "../../../controllers/Forms/ContentPicker/ContentPickerCtrl";
 
 export default function AddTour({
   // METHODS
   handlePublish,
-
   tourNameChanged,
   descriptionChanged,
   customFieldsChanged,
@@ -21,6 +21,8 @@ export default function AddTour({
   categoriesChanged,
   tagsChanged,
   isVisibleChanged,
+  plantsChanged,
+  waypointsChanged,
 
   // SELECTION DATA
   eImages,
@@ -28,6 +30,8 @@ export default function AddTour({
   eVideos,
   eCategories,
   eTags,
+  ePlants,
+  eWaypoints,
 
   // QUERIES
   queryImages,
@@ -69,12 +73,22 @@ export default function AddTour({
           label={"Description"}
           setter={(data) => descriptionChanged(data)}
           />
-           <CustomFieldPickerCtrl
-            label={"Custom Field"}
-            setter={(data) => customFieldsChanged(data)}
+           <ContentPickerCtrl
+            label={"waypoint"}
+            dataLabel={"waypoint"}
+            data={eWaypoints}
+            setter={(data) => waypointsChanged(data)}
           />
+                  
+          
         </div>
         <div className="col">
+          <ContentPickerCtrl
+              label={"plant"}
+              dataLabel={"plant"}
+              data={ePlants}
+              setter={(data) => plantsChanged(data)}
+            />
           <MediaPickerCtrl
             label={"image"}
             dataLabel={"image"}
@@ -112,6 +126,10 @@ export default function AddTour({
             data={eTags}
             query={queryTags}
             setter={(data) => tagsChanged(data)}
+          />
+           <CustomFieldPickerCtrl
+            label={"Custom Field"}
+            setter={(data) => customFieldsChanged(data)}
           />
           <TogglerCtrl
             label={"visibility"}

@@ -8,7 +8,10 @@ import {
   getVideos,
   getCategoryGroup,
   getTags,
+  getAllPlants,
+  getAllWaypoints,
   createTour,
+  
 } from "../../../network";
 
 export default function AddTourCtrl(){
@@ -31,6 +34,9 @@ export default function AddTourCtrl(){
   const [tags, setTags] = useState([]);
   const [isVisible, setIsVisible] = useState(true);
 
+  const [plants, setPlants] = useState([]);
+  const [waypoints, setWaypoints] = useState([]);
+
   // ===============================================================
   // SELECTION DATA
   // @desc data that appears as options in select boxes.
@@ -40,6 +46,8 @@ export default function AddTourCtrl(){
   const [eVideos, setEVideos] = useState([]);
   const [eCategories, setECategories] = useState([]);
   const [eTags, setETags] = useState([]);
+  const [ePlants, setEPlants] = useState([]);
+  const [eWaypoints, setEWaypoints] = useState([]);
 
   // Error handling
   const [directive, setDirective] = useState(null);
@@ -74,6 +82,8 @@ export default function AddTourCtrl(){
         await queryVideos();
         await queryTags();
         await queryCategories();
+        await queryPlants();
+        await queryWaypoints();
         setLoading(false);
       })();
     }
@@ -118,6 +128,20 @@ export default function AddTourCtrl(){
     setETags(result);
   };
 
+  const queryPlants = async () => {
+    const result = await getAllPlants();
+    if (result.error) return;
+    if (!isMounted) return;
+    setEPlants(result);
+  };
+
+  const queryWaypoints = async () => {
+    const result = await getAllWaypoints();
+    if (result.error) return;
+    if (!isMounted) return;
+    setEWaypoints(result);
+  };
+
     // ===============================================================
   // INPUT WATCHERS AND SETTERS
   // @desc functions that watch updates in children components, and sets them here.
@@ -157,6 +181,16 @@ export default function AddTourCtrl(){
     setIsVisible(data);
   };
 
+  const plantsChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    setPlants(mappedData);
+  };
+
+  const waypointsChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    setWaypoints(mappedData);
+  };
+
   // CREATE TOUR
   const handlePublish = async () => {
     if (!isMounted) return;
@@ -171,6 +205,8 @@ export default function AddTourCtrl(){
       categories: categories,
       custom_fields: customFields,
       isPublish: isVisible,
+      plants: plants,
+      waypoints: waypoints,
     };
 
     const result = await createTour(tour);
@@ -201,12 +237,17 @@ export default function AddTourCtrl(){
         customFieldsChanged={customFieldsChanged}
         isVisibleChanged={isVisibleChanged}
 
+        plantsChanged={plantsChanged}
+        waypointsChanged={waypointsChanged}
+
         // SELECTION DATA
         eImages={eImages}
         eAudios={eAudios}
         eVideos={eVideos}
         eCategories={eCategories}
         eTags={eTags}
+        ePlants={ePlants}
+        eWaypoints={eWaypoints}
 
         // QUERIES
         queryImages={queryImages}
