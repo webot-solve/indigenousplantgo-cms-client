@@ -213,9 +213,9 @@ export default function AddLearnMoreCtrl(){
       queryCategories={queryCategories}
       queryTags={queryTags}
 
-       // PRELOADER
-       loading={loading}
-       directive={directive}
+      // PRELOADER
+      loading={loading}
+      directive={directive}
     />
   );
 }

@@ -19,16 +19,22 @@ export default function AddTour({
   imagesChanged,
   audioFilesChanged,
   videosChanged,
+  categoriesChanged,
+  tagsChanged,
 
-   // SELECTION DATA
-   eImages,
-   eAudios,
-   eVideos,
+  // SELECTION DATA
+  eImages,
+  eAudios,
+  eVideos,
+  eCategories,
+  eTags,
 
-   // QUERIES
+  // QUERIES
   queryImages,
   queryAudios,
   queryVideos,
+  queryCategories,
+  queryTags,
 
   // Preloader
   loading,
@@ -83,6 +89,23 @@ export default function AddTour({
             data={eVideos}
             query={queryVideos}
             setter={(data) => videosChanged(data)}
+          />
+        </div>
+        <div className="col">
+          <TextPickerCtrl
+            label={"category"}
+            dataLabel={"category"}
+            data={eCategories}
+            query={queryCategories}
+            resource="learn_more"
+            setter={(data) => categoriesChanged(data)}
+          />
+           <TextPickerCtrl
+            label={"tag"}
+            dataLabel={"tag"}
+            data={eTags}
+            query={queryTags}
+            setter={(data) => tagsChanged(data)}
           />
         </div>
 

@@ -5,6 +5,8 @@ import {
   getImages,
   getAudios,
   getVideos,
+  getCategoryGroup,
+  getTags,
  
 } from "../../../network";
 
@@ -15,13 +17,18 @@ export default function AddTourCtrl(){
   // FORM DATA
   // @desc form control data
   // ===============================================================
+  const [tourName, setTourName] = useState("");
+  const [description, setDescription] = useState("");
+  const [customFields, setCustomFields] = useState([]);
+  
   const [images, setImages] = useState([]);
   const [audioFiles, setAudioFiles] = useState([]);
   const [videos, setVideos] = useState([]);
 
-  const [tourName, setTourName] = useState("");
-  const [description, setDescription] = useState("");
-  const [customFields, setCustomFields] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
+
+  
 
   // ===============================================================
   // SELECTION DATA
@@ -30,6 +37,8 @@ export default function AddTourCtrl(){
   const [eImages, setEImages] = useState([]);
   const [eAudios, setEAudios] = useState([]);
   const [eVideos, setEVideos] = useState([]);
+  const [eCategories, setECategories] = useState([]);
+  const [eTags, setETags] = useState([]);
 
   // Preloader
   const [loading, setLoading] = useState(false);
@@ -58,6 +67,20 @@ export default function AddTourCtrl(){
     setEVideos(result);
   };
 
+  const queryCategories = async () => {
+    const result = await getCategoryGroup("learn_more");
+    if (result.error) return;
+    if (!isMounted) return;
+    setECategories(result);
+  };
+
+  const queryTags = async () => {
+    const result = await getTags();
+    if (result.error) return;
+    if (!isMounted) return;
+    setETags(result);
+  };
+
     // ===============================================================
   // INPUT WATCHERS AND SETTERS
   // @desc functions that watch updates in children components, and sets them here.
@@ -75,6 +98,15 @@ export default function AddTourCtrl(){
     const mappedData = data.map((d) => d._id);
     setVideos(mappedData);
   };
+  const categoriesChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    setCategories(mappedData);
+  };
+  const tagsChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    setTags(mappedData);
+  };
+
 
 
   const tourNameChanged = (data) => {
@@ -95,6 +127,8 @@ export default function AddTourCtrl(){
         imagesChanged={imagesChanged}
         audioFilesChanged={audioFilesChanged}
         videosChanged={videosChanged}
+        categoriesChanged={categoriesChanged}
+        tagsChanged={tagsChanged}
 
         tourNameChanged={tourNameChanged}
         descriptionChanged={descriptionChanged}
@@ -104,11 +138,15 @@ export default function AddTourCtrl(){
         eImages={eImages}
         eAudios={eAudios}
         eVideos={eVideos}
+        eCategories={eCategories}
+        eTags={eTags}
 
         // QUERIES
         queryImages={queryImages}
         queryAudios={queryAudios}
         queryVideos={queryVideos}
+        queryCategories={queryCategories}
+        queryTags={queryTags}
 
         // PRELOADER
         loading={loading}
