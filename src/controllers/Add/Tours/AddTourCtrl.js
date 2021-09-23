@@ -41,8 +41,47 @@ export default function AddTourCtrl(){
   const [eCategories, setECategories] = useState([]);
   const [eTags, setETags] = useState([]);
 
+  // Error handling
+  const [directive, setDirective] = useState(null);
   // Preloader
   const [loading, setLoading] = useState(false);
+
+  //========================
+  //  USEEFFECT
+
+   useEffect(() => {
+    if (isMounted) resetDirective();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [directive]);
+
+  const resetDirective = () => {
+    (async () => {
+      await setTimeout(() => {
+        if (!isMounted) return;
+        setDirective(null);
+      }, 4000);
+    })();
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    isMounted = true;
+    if (isMounted) {
+      (async () => {
+        setLoading(true);
+        await queryImages();
+        await queryAudios();
+        await queryVideos();
+        await queryTags();
+        await queryCategories();
+        setLoading(false);
+      })();
+    }
+    return () => {
+      isMounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // ===============================================================
   // NETWORK QUERIES FOR EXISTING DATA
@@ -157,6 +196,7 @@ export default function AddTourCtrl(){
 
         // PRELOADER
         loading={loading}
+        directive={directive}
       />
     </div>
   );

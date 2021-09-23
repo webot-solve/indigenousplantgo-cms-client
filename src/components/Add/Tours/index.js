@@ -41,14 +41,20 @@ export default function AddTour({
 
   // Preloader
   loading,
-
-
-  
-  
- 
+  directive,
 }){
+  
   return (
     <div>
+      {typeof directive === "object" &&
+        directive !== null &&
+        Object.keys(directive).length > 0 && (
+          <Message
+            success={directive.success}
+            header={directive.header}
+            message={directive.message}
+          />
+        )}
       <DashHeader
         title="Add New Tour"
         action="Publish"
