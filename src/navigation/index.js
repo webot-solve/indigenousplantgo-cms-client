@@ -22,6 +22,7 @@ import WaypointCategories from "../pages/waypoints/WaypointCategories";
 import AllTours from "../pages/tours/AllTours";
 import AddTour from "../pages/tours/AddTour";
 import EditTour from "../pages/tours/EditTour";
+import ToursCategories from "../pages/tours/TourCategories";
 
 
 // LEARN MORE
@@ -128,6 +129,11 @@ export default function Navigation() {
         <PrivateRoute exact path="/tours" component={AllTours}/>
         <PrivateRoute exact path="/tours/add" component={AddTour}/>
         <PrivateRoute exact path="/tours/edit/:tourId" component={EditTour}/>
+        <PrivateRoute
+          exact
+          path="/tours/categories"
+          component={ToursCategories}
+        />
         
 
         {/* LEARN MORE */}
