@@ -17,15 +17,18 @@ export default function EditTour({
   waypointsChanged,
   imagesChanged,
   audioFilesChanged,
+  videosChanged,
 
   // SELECTION DATA
   eWaypoints,
   eImages,
   eAudios,
+  eVideos,
 
   // QUERIES
   queryImages,
   queryAudios,
+  queryVideos,
 
   loading,
 
@@ -83,6 +86,14 @@ export default function EditTour({
             query={queryAudios}
             selected={tourData.audio_files}
             setter={(data) => audioFilesChanged(data)}
+          />
+           <MediaPickerCtrl
+            label={"video"}
+            dataLabel={"video"}
+            data={eVideos}
+            query={queryVideos}
+            selected={tourData.videos}
+            setter={(data) => videosChanged(data)}
           />
        
         </div>

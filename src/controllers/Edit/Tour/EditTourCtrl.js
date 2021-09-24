@@ -6,6 +6,7 @@ import {
   getAllWaypoints,
   getImages, 
   getAudios,
+  getVideos,
  
 } from "../../../network";
 
@@ -25,6 +26,7 @@ export default function EditTourCtrl(){
   const [waypoints, setWaypoints] = useState([]);
   const [images, setImages] = useState([]);
   const [audioFiles, setAudioFiles] = useState([]);
+  const [videos, setVideos] = useState([]);
 
 
     // ===============================================================
@@ -34,6 +36,7 @@ export default function EditTourCtrl(){
   const [eWaypoints, setEWaypoints] = useState([]);
   const [eImages, setEImages] = useState([]);
   const [eAudios, setEAudios] = useState([]);
+  const [eVideos, setEVideos] = useState([]);
   
   
 
@@ -50,6 +53,7 @@ export default function EditTourCtrl(){
         await queryWaypoints();
         await queryImages();
         await queryAudios();
+        await queryVideos();
         
         
         setLoading(false);
@@ -92,6 +96,12 @@ export default function EditTourCtrl(){
     if (!isMounted) return;
     setEAudios(result);
   };
+  const queryVideos = async () => {
+    const result = await getVideos();
+    if (result.error) return;
+    if (!isMounted) return;
+    setEVideos(result);
+  };
 
   // ===============================================================
   // INPUT WATCHERS AND SETTERS
@@ -123,6 +133,11 @@ export default function EditTourCtrl(){
     if (!isMounted) return;
     setAudioFiles(mappedData);
   };
+  const videosChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    if (!isMounted) return;
+    setVideos(mappedData);
+  };
 
   return (
     <div>
@@ -134,18 +149,22 @@ export default function EditTourCtrl(){
         waypointsChanged={waypointsChanged}
         imagesChanged={imagesChanged}
         audioFilesChanged={audioFilesChanged}
+        videosChanged={videosChanged}
         
 
         // SELECTION DATA
         eWaypoints={eWaypoints}
         eImages={eImages}
         eAudios={eAudios}
+        eVideos={eVideos}
 
 
         // QUERIES
         queryTours={queryTours}
         queryImages={queryImages}
         queryAudios={queryAudios}
+        queryVideos={queryVideos}
+        
         
 
 
