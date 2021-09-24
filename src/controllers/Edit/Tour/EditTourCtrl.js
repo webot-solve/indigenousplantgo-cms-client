@@ -5,6 +5,7 @@ import {
   getTour,
   getAllWaypoints,
   getImages, 
+  getAudios,
  
 } from "../../../network";
 
@@ -23,6 +24,8 @@ export default function EditTourCtrl(){
   const [description, setDescription] = useState("");
   const [waypoints, setWaypoints] = useState([]);
   const [images, setImages] = useState([]);
+  const [audioFiles, setAudioFiles] = useState([]);
+
 
     // ===============================================================
   // SELECTION DATA
@@ -30,6 +33,9 @@ export default function EditTourCtrl(){
   // ===============================================================
   const [eWaypoints, setEWaypoints] = useState([]);
   const [eImages, setEImages] = useState([]);
+  const [eAudios, setEAudios] = useState([]);
+  
+  
 
   // Preloader
   const [loading, setLoading] = useState(false);
@@ -41,7 +47,10 @@ export default function EditTourCtrl(){
       (async () => {
         setLoading(true);
         await queryTours();
+        await queryWaypoints();
         await queryImages();
+        await queryAudios();
+        
         
         setLoading(false);
       })();
@@ -65,17 +74,23 @@ export default function EditTourCtrl(){
     if (!isMounted) return;
     setTourData(result);
   };
-  // const queryWaypoints = async () => {
-  //   const result = await getAllWaypoints();
-  //   if (result.error) return;
-  //   if (!isMounted) return;
-  //   setEWaypoints(result);
-  // };
+  const queryWaypoints = async () => {
+    const result = await getAllWaypoints();
+    if (result.error) return;
+    if (!isMounted) return;
+    setEWaypoints(result);
+  };
   const queryImages = async () => {
     const result = await getImages();
     if (result.error) return;
     if (!isMounted) return;
     setEImages(result);
+  };
+  const queryAudios = async () => {
+    const result = await getAudios();
+    if (result.error) return;
+    if (!isMounted) return;
+    setEAudios(result);
   };
 
   // ===============================================================
@@ -103,6 +118,11 @@ export default function EditTourCtrl(){
     if (!isMounted) return;
     setImages(mappedData);
   };
+  const audioFilesChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    if (!isMounted) return;
+    setAudioFiles(mappedData);
+  };
 
   return (
     <div>
@@ -113,16 +133,20 @@ export default function EditTourCtrl(){
         descriptionChanged={descriptionChanged}
         waypointsChanged={waypointsChanged}
         imagesChanged={imagesChanged}
+        audioFilesChanged={audioFilesChanged}
         
 
         // SELECTION DATA
         eWaypoints={eWaypoints}
         eImages={eImages}
+        eAudios={eAudios}
 
 
         // QUERIES
         queryTours={queryTours}
         queryImages={queryImages}
+        queryAudios={queryAudios}
+        
 
 
         
