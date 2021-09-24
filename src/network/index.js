@@ -1343,6 +1343,20 @@ export const getAllTours = async () => {
   }
 };
 
+export const getTour = async (id) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/tours/${id}`);
+    console.log("Network:",response.data)
+
+    return response.data;
+  } catch (error) {
+    console.log(error.reponse);
+    return {
+      error: error.response,
+    };
+  }
+};
+
 export const deleteTour = async (id) => {
   const token = getToken();
 
