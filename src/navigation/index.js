@@ -24,7 +24,6 @@ import AddTour from "../pages/tours/AddTour";
 import EditTour from "../pages/tours/EditTour";
 import ToursCategories from "../pages/tours/TourCategories";
 
-
 // LEARN MORE
 import AllLearnMore from '../pages/learnmore/AllLearnMore';
 import AddLearnMore from '../pages/learnmore/AddLearnMore';

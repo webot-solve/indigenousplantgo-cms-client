@@ -221,7 +221,6 @@ export default function AddTourCtrl(){
     history.push("/tours");
   };
 
-
   return (
     <div>
       <AddTour
@@ -236,7 +235,6 @@ export default function AddTourCtrl(){
         descriptionChanged={descriptionChanged}
         customFieldsChanged={customFieldsChanged}
         isVisibleChanged={isVisibleChanged}
-
         plantsChanged={plantsChanged}
         waypointsChanged={waypointsChanged}
 

@@ -41,11 +41,8 @@ export default function EditTour({
   queryVideos,
   queryCategories,
   queryTags,
-
   loading,
 
-
- 
 }){
   return (
     <div>
@@ -144,10 +141,7 @@ export default function EditTour({
             setter={(data) => isVisibleChanged(data)}
           />
         </div>
-
       </div>
-
-
     </div>
   )
 }
