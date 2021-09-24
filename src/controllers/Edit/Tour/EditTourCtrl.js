@@ -11,11 +11,9 @@ import {
   getTags,
   getAllPlants,
   updateTour
- 
 } from "../../../network";
 
 export default function EditTourCtrl(){
-
   let isMounted = true;
   const history = useHistory();
   const [tourData, setTourData] = useState({});
@@ -275,6 +273,7 @@ export default function EditTourCtrl(){
         queryTags={queryTags}
 
         loading={loading}
+        directive={directive}
       />
     </div>
   )
