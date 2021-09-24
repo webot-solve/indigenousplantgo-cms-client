@@ -1,5 +1,4 @@
 import React from 'react';
-
 import DashHeader from "../../DashHeader";
 import TextPickerCtrl from "../../../controllers/Forms/TextPicker/TextPickerCtrl";
 import MediaPickerCtrl from "../../../controllers/Forms/MediaPicker/MediaPickerCtrl";
@@ -127,10 +126,10 @@ export default function EditLearnMore({
             query={queryTags}
             setter={(data) => tagsChanged(data)}
           />
-            <TogglerCtrl
-            label={"visibility"}
-            eValue={learnMoreData.isPublish}
-            setter={(data) => isVisibleChanged(data)}
+          <TogglerCtrl
+          label={"visibility"}
+          eValue={learnMoreData.isPublish}
+          setter={(data) => isVisibleChanged(data)}
           />
         </div>
       </div>
