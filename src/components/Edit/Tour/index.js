@@ -11,6 +11,8 @@ import ContentPickerCtrl from "../../../controllers/Forms/ContentPicker/ContentP
 
 export default function EditTour({
   tourData,
+  handleUpdate,
+  
   // METHODS
   tourNameChanged,
   descriptionChanged,
@@ -18,17 +20,27 @@ export default function EditTour({
   imagesChanged,
   audioFilesChanged,
   videosChanged,
+  categoriesChanged,
+  tagsChanged,
+  customFieldsChanged,
+  isVisibleChanged,
+  plantsChanged,
 
   // SELECTION DATA
   eWaypoints,
   eImages,
   eAudios,
   eVideos,
+  eCategories,
+  eTags,
+  ePlants,
 
   // QUERIES
   queryImages,
   queryAudios,
   queryVideos,
+  queryCategories,
+  queryTags,
 
   loading,
 
@@ -47,7 +59,7 @@ export default function EditTour({
         }
         action="Update"
         loading={loading}
-        // method={() => handleUpdate()}
+        method={() => handleUpdate()}
       />
       <div className="form__grid">
         <div className="col">
@@ -71,6 +83,13 @@ export default function EditTour({
         </div>
 
         <div className="col">
+        <ContentPickerCtrl
+            label={"plant"}
+            dataLabel={"plant"}
+            data={ePlants}
+            selected={tourData.plants}
+            setter={(data) => plantsChanged(data)}
+          />
           <MediaPickerCtrl
             label={"image"}
             dataLabel={"image"}
@@ -87,15 +106,43 @@ export default function EditTour({
             selected={tourData.audio_files}
             setter={(data) => audioFilesChanged(data)}
           />
-           <MediaPickerCtrl
-            label={"video"}
-            dataLabel={"video"}
-            data={eVideos}
-            query={queryVideos}
-            selected={tourData.videos}
-            setter={(data) => videosChanged(data)}
+          <MediaPickerCtrl
+          label={"video"}
+          dataLabel={"video"}
+          data={eVideos}
+          query={queryVideos}
+          selected={tourData.videos}
+          setter={(data) => videosChanged(data)}
           />
-       
+        </div>
+        <div className="col">
+          <TextPickerCtrl
+              label={"category"}
+              dataLabel={"category"}
+              data={eCategories}
+              query={queryCategories}
+              selected={tourData.categories}
+              resource="learn_more"
+              setter={(data) => categoriesChanged(data)}
+          />
+           <TextPickerCtrl
+            label={"tag"}
+            dataLabel={"tag"}
+            data={eTags}
+            selected={tourData.tags}
+            query={queryTags}
+            setter={(data) => tagsChanged(data)}
+          />
+           <CustomFieldPickerCtrl
+            label={"Custom Field"}
+            selected={tourData.custom_fields}
+            setter={(data) => customFieldsChanged(data)}
+          />
+           <TogglerCtrl
+            label={"visibility"}
+            eValue={tourData.isPublish}
+            setter={(data) => isVisibleChanged(data)}
+          />
         </div>
 
       </div>

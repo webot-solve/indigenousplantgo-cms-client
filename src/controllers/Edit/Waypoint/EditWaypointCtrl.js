@@ -66,7 +66,6 @@ export default function EditWaypointCtrl() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     isMounted = true;
-
     if (isMounted) {
       (async () => {
         setLoading(true);

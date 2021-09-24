@@ -1,19 +1,23 @@
 import React, { useState, useEffect }  from "react";
 import EditTour from "../../../components/Edit/Tour";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { 
   getTour,
   getAllWaypoints,
   getImages, 
   getAudios,
   getVideos,
+  getCategoryGroup,
+  getTags,
+  getAllPlants,
+  updateTour
  
 } from "../../../network";
 
 export default function EditTourCtrl(){
 
   let isMounted = true;
-  
+  const history = useHistory();
   const [tourData, setTourData] = useState({});
   const { tourId } = useParams();
 
@@ -27,7 +31,11 @@ export default function EditTourCtrl(){
   const [images, setImages] = useState([]);
   const [audioFiles, setAudioFiles] = useState([]);
   const [videos, setVideos] = useState([]);
-
+  const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [isVisible, setIsVisible] = useState(true);
+  const [customFields, setCustomFields] = useState([]);
+  const [plants, setPlants] = useState([]);
 
     // ===============================================================
   // SELECTION DATA
@@ -37,11 +45,25 @@ export default function EditTourCtrl(){
   const [eImages, setEImages] = useState([]);
   const [eAudios, setEAudios] = useState([]);
   const [eVideos, setEVideos] = useState([]);
-  
-  
-
+  const [eCategories, setECategories] = useState([]);
+  const [eTags, setETags] = useState([]);
+  const [ePlants, setEPlants] = useState([]);
+  // Error handling
+   const [directive, setDirective] = useState(null);
   // Preloader
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (isMounted) resetDirective();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [directive]);
+
+  const resetDirective = async () => {
+    await setTimeout(() => {
+      if (!isMounted) return;
+      setDirective(null);
+    }, 4000);
+  };
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,13 +76,13 @@ export default function EditTourCtrl(){
         await queryImages();
         await queryAudios();
         await queryVideos();
-        
-        
+        await queryCategories();
+        await queryTags();
+        await queryPlants();
         setLoading(false);
       })();
     }
    
-
     return () => {
       isMounted = false;
     };
@@ -102,6 +124,26 @@ export default function EditTourCtrl(){
     if (!isMounted) return;
     setEVideos(result);
   };
+  const queryCategories = async () => {
+    const result = await getCategoryGroup("tour");
+    if (result.error) return;
+    if (!isMounted) return;
+    setECategories(result);
+  };
+
+  const queryTags = async () => {
+    const result = await getTags();
+    if (result.error) return;
+    if (!isMounted) return;
+    setETags(result);
+  };
+  const queryPlants = async () => {
+    const result = await getAllPlants();
+    if (result.error) return;
+    if (!isMounted) return;
+    setEPlants(result);
+  };
+
 
   // ===============================================================
   // INPUT WATCHERS AND SETTERS
@@ -138,11 +180,72 @@ export default function EditTourCtrl(){
     if (!isMounted) return;
     setVideos(mappedData);
   };
+  const categoriesChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    if (!isMounted) return;
+    setCategories(mappedData);
+  };
+  const tagsChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    if (!isMounted) return;
+    setTags(mappedData);
+  };
+  const isVisibleChanged = (data) => {
+    if (!isMounted) return;
+    setIsVisible(data);
+  };
+  const customFieldsChanged = (data) => {
+    if (!isMounted) return;
+    setCustomFields(data);
+  };
+  const plantsChanged = (data) => {
+    const mappedData = data.map((d) => d._id);
+    if (!isMounted) return;
+    setPlants(mappedData);
+  };
+
+  // ===============================================================
+  // POST
+  // @desc updates the tour
+  // ===============================================================
+  const handleUpdate = async () => {
+    if (!isMounted) return;
+    if (!tourName || !description)
+      return setDirective({
+        header: "Error updating waypoint",
+        message: "Missing required fields",
+        success: false,
+      });
+    const tour = {
+      tour_name: tourName,
+      description: description,
+      images: images,
+      audio_files: audioFiles,
+      videos: videos,
+      tags: tags,
+      categories: categories,
+      custom_fields: customFields,
+      waypoints: waypoints,
+      plants: plants,
+      isPublish: isVisible,
+    };
+
+    const result = await updateTour(tourId, tour);
+    if (!isMounted) return;
+    if (result.error)
+      return setDirective({
+        header: "Error updating tour",
+        message: result.error.data.error,
+        success: false,
+      });
+    history.push("/tours");
+  };
 
   return (
     <div>
       <EditTour
         tourData = {tourData}
+        handleUpdate={handleUpdate}
         // METHODS
         tourNameChanged ={tourNameChanged}
         descriptionChanged={descriptionChanged}
@@ -150,6 +253,12 @@ export default function EditTourCtrl(){
         imagesChanged={imagesChanged}
         audioFilesChanged={audioFilesChanged}
         videosChanged={videosChanged}
+        categoriesChanged={categoriesChanged}
+        tagsChanged={tagsChanged}
+        isVisibleChanged={isVisibleChanged}
+        customFieldsChanged={customFieldsChanged}
+        plantsChanged={plantsChanged}
+
         
 
         // SELECTION DATA
@@ -157,6 +266,9 @@ export default function EditTourCtrl(){
         eImages={eImages}
         eAudios={eAudios}
         eVideos={eVideos}
+        eCategories={eCategories}
+        eTags={eTags}
+        ePlants={ePlants}
 
 
         // QUERIES
@@ -164,11 +276,9 @@ export default function EditTourCtrl(){
         queryImages={queryImages}
         queryAudios={queryAudios}
         queryVideos={queryVideos}
-        
-        
+        queryCategories={queryCategories}
+        queryTags={queryTags}
 
-
-        
         loading={loading}
       />
     </div>

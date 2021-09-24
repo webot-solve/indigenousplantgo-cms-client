@@ -126,10 +126,10 @@ export default function EditLearnMore({
             query={queryTags}
             setter={(data) => tagsChanged(data)}
           />
-            <TogglerCtrl
-            label={"visibility"}
-            eValue={learnMoreData.isPublish}
-            setter={(data) => isVisibleChanged(data)}
+          <TogglerCtrl
+          label={"visibility"}
+          eValue={learnMoreData.isPublish}
+          setter={(data) => isVisibleChanged(data)}
           />
         </div>
       </div>
