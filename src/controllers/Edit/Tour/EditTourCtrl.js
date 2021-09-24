@@ -271,7 +271,6 @@ export default function EditTourCtrl(){
         queryVideos={queryVideos}
         queryCategories={queryCategories}
         queryTags={queryTags}
-
         loading={loading}
         directive={directive}
       />
