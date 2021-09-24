@@ -116,7 +116,7 @@ export default function AddTourCtrl(){
     setEVideos(result);
   };
   const queryCategories = async () => {
-    const result = await getCategoryGroup("learn_more");
+    const result = await getCategoryGroup("tour");
     if (result.error) return;
     if (!isMounted) return;
     setECategories(result);

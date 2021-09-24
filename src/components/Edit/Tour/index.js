@@ -122,7 +122,7 @@ export default function EditTour({
               data={eCategories}
               query={queryCategories}
               selected={tourData.categories}
-              resource="learn_more"
+              resource="tour"
               setter={(data) => categoriesChanged(data)}
           />
            <TextPickerCtrl
