@@ -1433,3 +1433,27 @@ export const createTour = async (tour) => {
     };
   }
 };
+
+export const updateTour = async (id, learnMore) => {
+  const token = getToken();
+
+  if (!token)
+    return {
+      error: "No token found. Could not authenticate request.",
+    };
+  try {
+    const response = await axios.put(`${BASE_URL}/tours/${id}`, learnMore, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error.response);
+    return {
+      error: error.message,
+    };
+  }
+};
