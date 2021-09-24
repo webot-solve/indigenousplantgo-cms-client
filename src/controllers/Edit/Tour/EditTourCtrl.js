@@ -11,11 +11,9 @@ import {
   getTags,
   getAllPlants,
   updateTour
- 
 } from "../../../network";
 
 export default function EditTourCtrl(){
-
   let isMounted = true;
   const history = useHistory();
   const [tourData, setTourData] = useState({});
@@ -144,7 +142,6 @@ export default function EditTourCtrl(){
     setEPlants(result);
   };
 
-
   // ===============================================================
   // INPUT WATCHERS AND SETTERS
   // @desc functions that watch updates in children components, and sets them here.
@@ -157,7 +154,6 @@ export default function EditTourCtrl(){
     if (!isMounted) return;
     setDescription(data);
   };
-
   const waypointsChanged = (data) => {
     const mappedData = data.map((d) => d._id);
     if (!isMounted) return;
@@ -258,9 +254,7 @@ export default function EditTourCtrl(){
         isVisibleChanged={isVisibleChanged}
         customFieldsChanged={customFieldsChanged}
         plantsChanged={plantsChanged}
-
         
-
         // SELECTION DATA
         eWaypoints={eWaypoints}
         eImages={eImages}
@@ -269,8 +263,7 @@ export default function EditTourCtrl(){
         eCategories={eCategories}
         eTags={eTags}
         ePlants={ePlants}
-
-
+       
         // QUERIES
         queryTours={queryTours}
         queryImages={queryImages}
@@ -280,6 +273,7 @@ export default function EditTourCtrl(){
         queryTags={queryTags}
 
         loading={loading}
+        directive={directive}
       />
     </div>
   )

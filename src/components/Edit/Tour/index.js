@@ -41,14 +41,21 @@ export default function EditTour({
   queryVideos,
   queryCategories,
   queryTags,
-
   loading,
+  directive,
 
-
- 
 }){
   return (
     <div>
+       {typeof directive === "object" &&
+        directive !== null &&
+        Object.keys(directive).length > 0 && (
+          <Message
+            success={directive.success}
+            header={directive.header}
+            message={directive.message}
+          />
+        )}
       <DashHeader
         title={
           tourData && tourData.tour_name
@@ -122,7 +129,7 @@ export default function EditTour({
               data={eCategories}
               query={queryCategories}
               selected={tourData.categories}
-              resource="learn_more"
+              resource="tour"
               setter={(data) => categoriesChanged(data)}
           />
            <TextPickerCtrl
@@ -144,10 +151,7 @@ export default function EditTour({
             setter={(data) => isVisibleChanged(data)}
           />
         </div>
-
       </div>
-
-
     </div>
   )
 }

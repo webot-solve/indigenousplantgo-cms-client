@@ -117,7 +117,7 @@ export default function AddTour({
             dataLabel={"category"}
             data={eCategories}
             query={queryCategories}
-            resource="learn_more"
+            resource="tour"
             setter={(data) => categoriesChanged(data)}
           />
            <TextPickerCtrl
