@@ -41,7 +41,7 @@ export default function Table({
                 <Link 
                   type="button" 
                   value={tour._id}
-                  to={`/learnmore/edit/${tour._id}`}
+                  to={`/tours/edit/${tour._id}`}
                 >
                   Edit&nbsp;
                 </Link>

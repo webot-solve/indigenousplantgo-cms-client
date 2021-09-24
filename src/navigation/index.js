@@ -21,6 +21,7 @@ import WaypointCategories from "../pages/waypoints/WaypointCategories";
 // TOURS 
 import AllTours from "../pages/tours/AllTours";
 import AddTour from "../pages/tours/AddTour";
+import EditTour from "../pages/tours/EditTour";
 
 
 // LEARN MORE
@@ -126,6 +127,8 @@ export default function Navigation() {
         {/* TOURS  */}
         <PrivateRoute exact path="/tours" component={AllTours}/>
         <PrivateRoute exact path="/tours/add" component={AddTour}/>
+        <PrivateRoute exact path="/tours/edit/:tourId" component={EditTour}/>
+        
 
         {/* LEARN MORE */}
         <PrivateRoute exact path="/learnmore" component={AllLearnMore}/>

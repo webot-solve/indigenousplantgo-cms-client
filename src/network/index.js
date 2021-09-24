@@ -1346,7 +1346,6 @@ export const getAllTours = async () => {
 export const getTour = async (id) => {
   try {
     const response = await axios.get(`${BASE_URL}/tours/${id}`);
-    console.log("Network:",response.data)
 
     return response.data;
   } catch (error) {

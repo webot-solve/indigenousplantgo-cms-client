@@ -1,5 +1,4 @@
 import React from 'react';
-
 import DashHeader from "../../DashHeader";
 import TextPickerCtrl from "../../../controllers/Forms/TextPicker/TextPickerCtrl";
 import MediaPickerCtrl from "../../../controllers/Forms/MediaPicker/MediaPickerCtrl";
