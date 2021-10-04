@@ -105,7 +105,7 @@ export default function ListCategoriesCtrl({ dataLabel, label, labelPlural }) {
     if (!searchQ) return setCategories_(eCategories);
 
     let filteredData = eCategories.filter((category) =>
-      category.category_name.toLowerCase().startsWith(searchQ)
+      category.category_name.toLowerCase().includes(searchQ)
     );
     setCategories_(filteredData);
   };
